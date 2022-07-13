@@ -1,0 +1,254 @@
+USE [Galderma_Mexico_PTR_RX_OTC]
+GO
+/****** Object:  StoredProcedure [dbo].[GALDERMA_OTC_RX_PTR_MEXICO]    Script Date: 07/16/2015 01:09:52 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[GALDERMA_OTC_RX_PTR_MEXICO]
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	if exists (select * from dbo.sysobjects where id = object_id(N'[M01_pivoted_sum]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	drop table [M01_pivoted_sum]
+
+	if exists (select * from dbo.sysobjects where id = object_id(N'[M02_pivoted_sum]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	drop table [M02_pivoted_sum]
+
+	if exists (select * from dbo.sysobjects where id = object_id(N'[M03_pivoted_sum]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	drop table [M03_pivoted_sum]
+
+	if exists (select * from dbo.sysobjects where id = object_id(N'[GALDERMA_INTER_PTR]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	drop table [GALDERMA_INTER_PTR]
+-----------------	
+SELECT     
+			CTY,CRP,MNF,OTC3,OTC4,INTPRD,PRD,PCK,[PCK-DATE],[PRD-AGE],NFC123,PRES,REG,[STR],MOL,PERIOD, 
+			sum(cast([SALES-UN] as float))as [SALES-UN],
+sum(CAST([SALES-SU] AS FLOAT))as [SALES-SU],
+			sum(CAST([SALES-CU] AS FLOAT))as [SALES-CU],			
+			sum(CAST([SALES-PUB-LCD]AS FLOAT))as [SALES-PUB-LCD],
+			sum(cast([SALES-PUB-USD] as float))as [SALES-PUB-USD], 
+			sum(CAST([SALES-PUB-EUR] AS FLOAT))as [SALES-PUB-EUR],
+sum(CAST([SALES-PUB-LCE] AS FLOAT))as [SALES-PUB-LCE]
+			
+
+			
+	into	M01_pivoted_sum
+	FROM	M01_pivoted
+group by CTY,CRP,MNF,OTC3,OTC4,INTPRD,PRD,PCK,[PCK-DATE],[PRD-AGE],NFC123,PRES,REG,[STR],MOL,PERIOD
+
+
+    delete M01_pivoted_sum
+	where   M01_pivoted_sum.[SALES-UN]='0' and 
+			M01_pivoted_sum.[SALES-SU]='0' and 
+			M01_pivoted_sum.[SALES-CU]='0' and 
+			M01_pivoted_sum.[SALES-PUB-LCD]='0' and 
+			M01_pivoted_sum.[SALES-PUB-USD]='0' and 
+			M01_pivoted_sum.[SALES-PUB-EUR]='0' and
+M01_pivoted_sum.[SALES-PUB-LCE]='0' 			
+
+-----------
+SELECT     
+			CTY,CRP,MNF,OTC3,OTC4,INTPRD,PRD,PCK,[PCK-DATE],[PRD-AGE],NFC123,PRES,REG,[STR],MOL,PERIOD, 
+			sum(cast([Rx-SALES-UN] as float))as [Rx-SALES-UN],
+sum(CAST([Rx-SALES-SU] AS FLOAT))as [Rx-SALES-SU],
+			sum(CAST([Rx-SALES-CU] AS FLOAT))as [Rx-SALES-CU],			
+			sum(CAST([SALES-PUB-LCD(Rx)]AS FLOAT))as [SALES-PUB-LCD(Rx)],
+			sum(cast([SALES-PUB-USD(Rx)] as float))as [SALES-PUB-USD(Rx)], 
+			sum(CAST([SALES-PUB-EUR(Rx)] AS FLOAT))as [SALES-PUB-EUR(Rx)],
+sum(CAST([SALES-PUB-LCE(Rx)] AS FLOAT))as [SALES-PUB-LCE(Rx)]
+			
+
+			
+	into	M02_pivoted_sum
+	FROM	M02_pivoted
+group by CTY,CRP,MNF,OTC3,OTC4,INTPRD,PRD,PCK,[PCK-DATE],[PRD-AGE],NFC123,PRES,REG,[STR],MOL,PERIOD
+
+
+    delete M02_pivoted_sum
+	where   M02_pivoted_sum.[Rx-SALES-UN]='0' and 
+			M02_pivoted_sum.[Rx-SALES-SU]='0' and 
+			M02_pivoted_sum.[Rx-SALES-CU]='0' and 
+			M02_pivoted_sum.[SALES-PUB-LCD(Rx)]='0' and 
+			M02_pivoted_sum.[SALES-PUB-USD(Rx)]='0' and 
+			M02_pivoted_sum.[SALES-PUB-EUR(Rx)]='0' and
+M02_pivoted_sum.[SALES-PUB-LCE(Rx)]='0'
+
+-----------------
+SELECT     
+			CTY,CRP,MNF,OTC3,OTC4,INTPRD,PRD,PCK,[PCK-DATE],[PRD-AGE],NFC123,PRES,REG,[STR],MOL,PERIOD, 
+			sum(cast([OTC-SALES-UN] as float))as [OTC-SALES-UN],
+sum(CAST([OTC-SALES-SU] AS FLOAT))as [OTC-SALES-SU],
+			sum(CAST([OTC-SALES-CU] AS FLOAT))as [OTC-SALES-CU],			
+			sum(CAST([SALES-PUB-LCD(OTC)]AS FLOAT))as [SALES-PUB-LCD(OTC)],
+			sum(cast([SALES-PUB-USD(OTC)] as float))as [SALES-PUB-USD(OTC)], 
+			sum(CAST([SALES-PUB-EUR(OTC)] AS FLOAT))as [SALES-PUB-EUR(OTC)],
+sum(CAST([SALES-PUB-LCE(OTC)] AS FLOAT))as [SALES-PUB-LCE(OTC)]
+			
+
+			
+	into	M03_pivoted_sum
+	FROM	M03_pivoted
+group by CTY,CRP,MNF,OTC3,OTC4,INTPRD,PRD,PCK,[PCK-DATE],[PRD-AGE],NFC123,PRES,REG,[STR],MOL,PERIOD
+
+
+    delete M03_pivoted_sum
+	where   M03_pivoted_sum.[OTC-SALES-UN]='0' and 
+			M03_pivoted_sum.[OTC-SALES-SU]='0' and 
+			M03_pivoted_sum.[OTC-SALES-CU]='0' and 
+			M03_pivoted_sum.[SALES-PUB-LCD(OTC)]='0' and 
+			M03_pivoted_sum.[SALES-PUB-USD(OTC)]='0' and 
+			M03_pivoted_sum.[SALES-PUB-EUR(OTC)]='0' and
+M03_pivoted_sum.[SALES-PUB-LCE(OTC)]='0'
+--------------
+
+--drop table [GALDERMA_INTER_PTR]	
+select	[COUNTRY] =	M01_pivoted_sum.[CTY],
+		[CORPORATION] =	M01_pivoted_sum.[CRP],
+		[MANUFACTURER] =	M01_pivoted_sum.[MNF],
+			[OTC3] =        M01_pivoted_sum.[OTC3],
+		[OTC4] =        M01_pivoted_sum.[OTC4],
+		[INTERNATIONAL PRODUCT] =	M01_pivoted_sum.[INTPRD],
+		[PRODUCT] =     M01_pivoted_sum.[PRD],
+		[PACK] =	      M01_pivoted_sum.[PCK],
+		[PACK DATE] =   M01_pivoted_sum.[PCK-DATE],
+		[PRODUCT AGE] = M01_pivoted_sum.[PRD-AGE],	
+		[NFC123] =      M01_pivoted_sum.[NFC123],
+		[PRESCRIPTION INDICATOR] = M01_pivoted_sum.[PRES],
+		[REGISTRATION] =           M01_pivoted_sum.[REG],
+		[STRENGTH] =               M01_pivoted_sum.[STR],
+[MOLECULE] =	M01_pivoted_sum.[MOL],
+		[PERIOD]= M01_pivoted_sum.[PERIOD],
+[SALES-CU] = M01_pivoted_sum.[SALES-CU],
+		[SALES-SU] = M01_pivoted_sum.[SALES-SU],
+		[SALES-UN] = M01_pivoted_sum.[SALES-UN],
+		[SALES-PUB-USD] = convert(numeric(12,2),M01_pivoted_sum.[SALES-PUB-USD]),
+		[SALES-PUB-LCD] = convert(numeric(12,2),M01_pivoted_sum.[SALES-PUB-LCD]),
+		[SALES-PUB-EUR] = convert(numeric(12,2),M01_pivoted_sum.[SALES-PUB-EUR]),
+		[SALES-PUB-LCE] = convert(numeric(12,2),M01_pivoted_sum.[SALES-PUB-LCE]),		
+		[AvPrice-PUB-USD] = convert(decimal(12,2),[SALES-PUB-USD]/NULLIF([SALES-UN],0)),
+		[AvPrice-PUB-LCD] = convert(decimal(12,2),[SALES-PUB-LCD]/NULLIF([SALES-UN],0)),
+		[AvPrice-PUB-EUR] = convert(decimal(12,2),[SALES-PUB-EUR]/NULLIF([SALES-UN],0)),
+		[AvPrice-PUB-LCE] = convert(decimal(12,2),[SALES-PUB-LCE]/NULLIF([SALES-UN],0)),
+
+		[RX-SALES-CU] =  convert(float,0.0),
+		[RX-SALES-SU] =  convert(float,0.0),
+		[RX-SALES-UN] =  convert(float,0.0),
+		[SALES-PUB-USD(RX)] =  convert(numeric(12,2),0),
+		[SALES-PUB-LCD(RX)] =  convert(numeric(12,2),0),
+		[SALES-PUB-EUR(RX)] =  convert(numeric(12,2),0),
+		[SALES-PUB-LCE(RX)] =  convert(numeric(12,2),0),		
+		[AvPrice-PUB-USD(Rx)] = convert(decimal(12,2),0),
+		[AvPrice-PUB-LCD(Rx)] = convert(decimal(12,2),0),
+		[AvPrice-PUB-EUR(Rx)] = convert(decimal(12,2),0),
+		[AvPrice-PUB-LCE(Rx)] = convert(decimal(12,2),0),
+
+		[OTC-SALES-CU] = convert(float,0.0),
+		[OTC-SALES-SU] = convert(float,0.0),
+		[OTC-SALES-UN] = convert(float,0.0),
+		[SALES-PUB-USD(OTC)] = convert(numeric(12,2),0),
+		[SALES-PUB-LCD(OTC)] = convert(numeric(12,2),0),
+		[SALES-PUB-EUR(OTC)] = convert(numeric(12,2),0),
+		[SALES-PUB-LCE(OTC)] = convert(numeric(12,2),0),		
+		[AvPrice-PUB-USD(OTC)] = convert(decimal(12,2),0),
+		[AvPrice-PUB-LCD(OTC)] = convert(decimal(12,2),0),
+		[AvPrice-PUB-EUR(OTC)] = convert(decimal(12,2),0),
+		[AvPrice-PUB-LCE(OTC)] = convert(decimal(12,2),0)
+
+		
+
+	into GALDERMA_INTER_PTR
+	from M01_pivoted_sum
+
+update GALDERMA_INTER_PTR
+set	GALDERMA_INTER_PTR.[RX-SALES-CU] = M02_pivoted_sum.[RX-SALES-CU],
+	GALDERMA_INTER_PTR.[RX-SALES-SU] = M02_pivoted_sum.[RX-SALES-SU],
+	GALDERMA_INTER_PTR.[RX-SALES-UN] = M02_pivoted_sum.[RX-SALES-UN],
+	GALDERMA_INTER_PTR.[SALES-PUB-USD(RX)] = M02_pivoted_sum.[SALES-PUB-USD(RX)],
+	GALDERMA_INTER_PTR.[SALES-PUB-LCD(RX)] = M02_pivoted_sum.[SALES-PUB-LCD(RX)],
+	GALDERMA_INTER_PTR.[SALES-PUB-EUR(RX)] = M02_pivoted_sum.[SALES-PUB-EUR(RX)],
+	GALDERMA_INTER_PTR.[SALES-PUB-LCE(RX)] = M02_pivoted_sum.[SALES-PUB-LCE(RX)],
+
+	GALDERMA_INTER_PTR.[AvPrice-PUB-USD(RX)] = M02_pivoted_sum.[SALES-PUB-USD(RX)]/NULLIF(M02_pivoted_sum.[RX-SALES-UN],0),
+	GALDERMA_INTER_PTR.[AvPrice-PUB-LCD(RX)] = M02_pivoted_sum.[SALES-PUB-LCD(RX)]/NULLIF(M02_pivoted_sum.[RX-SALES-UN],0),
+	GALDERMA_INTER_PTR.[AvPrice-PUB-EUR(RX)] = M02_pivoted_sum.[SALES-PUB-EUR(RX)]/NULLIF(M02_pivoted_sum.[RX-SALES-UN],0),
+	GALDERMA_INTER_PTR.[AvPrice-PUB-LCE(RX)] = M02_pivoted_sum.[SALES-PUB-LCE(RX)]/NULLIF(M02_pivoted_sum.[RX-SALES-UN],0)
+
+	from M02_pivoted_sum
+	where   
+		GALDERMA_INTER_PTR.[COUNTRY] =	M02_pivoted_sum.[CTY] and
+		GALDERMA_INTER_PTR.[CORPORATION] =	M02_pivoted_sum.[CRP]and
+		GALDERMA_INTER_PTR.[MANUFACTURER] =	M02_pivoted_sum.[MNF]and
+			GALDERMA_INTER_PTR.[OTC3] =        M02_pivoted_sum.[OTC3]and
+		GALDERMA_INTER_PTR.[OTC4] =        M02_pivoted_sum.[OTC4]and
+		GALDERMA_INTER_PTR.[INTERNATIONAL PRODUCT] =	M02_pivoted_sum.[INTPRD]and
+		GALDERMA_INTER_PTR.[PRODUCT] =     M02_pivoted_sum.[PRD]and
+		GALDERMA_INTER_PTR.[PACK] =	      M02_pivoted_sum.[PCK]and
+		GALDERMA_INTER_PTR.[PACK DATE] =   M02_pivoted_sum.[PCK-DATE]and
+		GALDERMA_INTER_PTR.[PRODUCT AGE] = M02_pivoted_sum.[PRD-AGE]and	
+		GALDERMA_INTER_PTR.[NFC123] =      M02_pivoted_sum.[NFC123]and
+		GALDERMA_INTER_PTR.[PRESCRIPTION INDICATOR] = M02_pivoted_sum.[PRES]and
+		GALDERMA_INTER_PTR.[REGISTRATION] =           M02_pivoted_sum.[REG]and
+		GALDERMA_INTER_PTR.[STRENGTH] =               M02_pivoted_sum.[STR]and
+GALDERMA_INTER_PTR.[MOLECULE] =	M02_pivoted_sum.[MOL]and
+		GALDERMA_INTER_PTR.[PERIOD]= M02_pivoted_sum.[PERIOD]
+
+
+
+update GALDERMA_INTER_PTR
+set	GALDERMA_INTER_PTR.[OTC-SALES-CU] = M03_pivoted_sum.[OTC-SALES-CU],
+	GALDERMA_INTER_PTR.[OTC-SALES-SU] = M03_pivoted_sum.[OTC-SALES-SU],
+	GALDERMA_INTER_PTR.[OTC-SALES-UN] = M03_pivoted_sum.[OTC-SALES-UN],
+	GALDERMA_INTER_PTR.[SALES-PUB-USD(OTC)]= M03_pivoted_sum.[SALES-PUB-USD(OTC)],
+	GALDERMA_INTER_PTR.[SALES-PUB-LCD(OTC)] = M03_pivoted_sum.[SALES-PUB-LCD(OTC)],
+	GALDERMA_INTER_PTR.[SALES-PUB-EUR(OTC)] = M03_pivoted_sum.[SALES-PUB-EUR(OTC)],
+	GALDERMA_INTER_PTR.[SALES-PUB-LCE(OTC)] = M03_pivoted_sum.[SALES-PUB-LCE(OTC)],
+
+	GALDERMA_INTER_PTR.[AvPrice-PUB-USD(OTC)] = M03_pivoted_sum.[SALES-PUB-USD(OTC)]/NULLIF(M03_pivoted_sum.[OTC-SALES-UN],0),
+	GALDERMA_INTER_PTR.[AvPrice-PUB-LCD(OTC)] = M03_pivoted_sum.[SALES-PUB-LCD(OTC)]/NULLIF(M03_pivoted_sum.[OTC-SALES-UN],0),
+	GALDERMA_INTER_PTR.[AvPrice-PUB-EUR(OTC)] = M03_pivoted_sum.[SALES-PUB-EUR(OTC)]/NULLIF(M03_pivoted_sum.[OTC-SALES-UN],0),
+	GALDERMA_INTER_PTR.[AvPrice-PUB-LCE(OTC)] = M03_pivoted_sum.[SALES-PUB-LCE(OTC)]/NULLIF(M03_pivoted_sum.[OTC-SALES-UN],0)
+
+	from M03_pivoted_sum
+	where   
+		GALDERMA_INTER_PTR.[COUNTRY] =	M03_pivoted_sum.[CTY] and
+		GALDERMA_INTER_PTR.[CORPORATION] =	M03_pivoted_sum.[CRP]and
+		GALDERMA_INTER_PTR.[MANUFACTURER] =	M03_pivoted_sum.[MNF]and
+			GALDERMA_INTER_PTR.[OTC3] =        M03_pivoted_sum.[OTC3]and
+		GALDERMA_INTER_PTR.[OTC4] =        M03_pivoted_sum.[OTC4]and
+		GALDERMA_INTER_PTR.[INTERNATIONAL PRODUCT] =	M03_pivoted_sum.[INTPRD]and
+		GALDERMA_INTER_PTR.[PRODUCT] =     M03_pivoted_sum.[PRD]and
+		GALDERMA_INTER_PTR.[PACK] =	      M03_pivoted_sum.[PCK]and
+		GALDERMA_INTER_PTR.[PACK DATE] =   M03_pivoted_sum.[PCK-DATE]and
+		GALDERMA_INTER_PTR.[PRODUCT AGE] = M03_pivoted_sum.[PRD-AGE]and	
+		GALDERMA_INTER_PTR.[NFC123] =      M03_pivoted_sum.[NFC123]and
+		GALDERMA_INTER_PTR.[PRESCRIPTION INDICATOR] = M03_pivoted_sum.[PRES]and
+		GALDERMA_INTER_PTR.[REGISTRATION] =           M03_pivoted_sum.[REG]and
+		GALDERMA_INTER_PTR.[STRENGTH] =               M03_pivoted_sum.[STR]and
+GALDERMA_INTER_PTR.[MOLECULE] =	M03_pivoted_sum.[MOL]and
+		GALDERMA_INTER_PTR.[PERIOD]= M03_pivoted_sum.[PERIOD]
+ 
+
+
+
+--DELETE FROM GALDERMA_INTER_PTR
+--	WHERE PERIOD LIKE '%MAT%'
+--
+--	
+Update dbo.GALDERMA_INTER_PTR	          
+Set Period = substring(period,1,3)+cast(cast(left(right('0'+SUBSTRING(period,4,(len(period))),7),2) as integer) as varchar)+'/'+right(Period,2)
+
+Update dbo.GALDERMA_INTER_PTR
+set period  =replace(period,'01/','') 
+
+Update dbo.GALDERMA_INTER_PTR
+Set Period  =REPLACE(Period,'/20','/')
+
+Update dbo.GALDERMA_INTER_PTR
+set period = case when (len(ltrim(rtrim(substring(period,1,len(period))))) = 4) then '0' + substring(period,1,len(period))
+		else substring(period,1,len(period))
+		end
+
+
+end

@@ -1,0 +1,254 @@
+USE [galderma_midas_feed_PTR_OTC_RX]
+GO
+/****** Object:  StoredProcedure [dbo].[GALDERMA_PROCESSING_PTR_OTC_RX_REVNO_QTH]    Script Date: 07/16/2015 01:07:01 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[GALDERMA_PROCESSING_PTR_OTC_RX_REVNO_QTH]
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	if exists (select * from dbo.sysobjects where id = object_id(N'[Q01_REVNO_sum]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	drop table [Q01_REVNO_sum]
+
+	if exists (select * from dbo.sysobjects where id = object_id(N'[Q02_REVNO_sum]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	drop table [Q02_REVNO_sum]
+
+	if exists (select * from dbo.sysobjects where id = object_id(N'[Q03_REVNO_sum]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	drop table [Q03_REVNO_sum]
+
+	if exists (select * from dbo.sysobjects where id = object_id(N'[GALDERMA_INTER_PTR_REVNO_QTR]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+	drop table [GALDERMA_INTER_PTR_REVNO_QTR]
+-----------------	
+SELECT     
+			CTY,CRP,MNF,MOL,INTPRD,PRD,PCK,[PCK_DATE],[PRD_AGE],OTC3,OTC4,NFC123,PRES,REG,[STR],PERIOD, 
+			sum(cast([UN] as float))as [UN],
+			sum(CAST([SU] AS FLOAT))as [SU],
+			sum(CAST([CU] AS FLOAT))as [CU],
+			sum(CAST([LCD_PUB] AS FLOAT))as [LCD_PUB],
+			sum(cast([USD_PUB] as float))as [USD_PUB], 
+			sum(CAST([EUR_PUB] AS FLOAT))as [EUR_PUB],
+			sum(CAST([LEU_PUB] AS FLOAT))as [LEU_PUB]
+
+			
+	into	Q01_REVNO_sum
+	FROM	Q1_REVNO
+group by CTY,CRP,MNF,MOL,INTPRD,PRD,PCK,[PCK_DATE],[PRD_AGE],OTC3,OTC4,NFC123,PRES,REG,[STR],PERIOD
+
+
+
+    delete Q01_REVNO_sum
+	where   Q01_REVNO_sum.[UN]='0' and 
+			Q01_REVNO_sum.[SU]='0' and 
+			Q01_REVNO_sum.[CU]='0' and 
+			Q01_REVNO_sum.[LCD_PUB]='0' and 
+			Q01_REVNO_sum.[USD_PUB]='0' and 
+			Q01_REVNO_sum.[EUR_PUB]='0' and 
+			Q01_REVNO_sum.[LEU_PUB]='0' 
+
+-----------
+
+SELECT     
+			CTY,CRP,MNF,MOL,INTPRD,PRD,PCK,[PCK_DATE],[PRD_AGE],OTC3,OTC4,NFC123,PRES,REG,[STR],PERIOD, 
+			sum(cast([PUN] as float))as [PUN],
+			sum(CAST([PSU] AS FLOAT))as [PSU],
+			sum(CAST([PCU] AS FLOAT))as [PCU],
+			sum(CAST([PLCD_PUB] AS FLOAT))as [PLCD_PUB],
+			sum(cast([PUSD_PUB] as float))as [PUSD_PUB], 
+			sum(CAST([PEUR_PUB] AS FLOAT))as [PEUR_PUB],
+			sum(CAST([PLEU_PUB] AS FLOAT))as [PLEU_PUB]
+
+			
+	into	Q02_REVNO_sum
+	FROM	Q2_REVNO
+group by CTY,CRP,MNF,MOL,INTPRD,PRD,PCK,[PCK_DATE],[PRD_AGE],OTC3,OTC4,NFC123,PRES,REG,[STR],PERIOD
+
+	 
+
+    delete Q02_REVNO_sum
+	where   Q02_REVNO_sum.[PUN]='0' and 
+			Q02_REVNO_sum.[PSU]='0' and 
+			Q02_REVNO_sum.[PCU]='0' and 
+			Q02_REVNO_sum.[PLCD_PUB]='0' and 
+			Q02_REVNO_sum.[PUSD_PUB]='0' and 
+			Q02_REVNO_sum.[PEUR_PUB]='0' and 
+			Q02_REVNO_sum.[PLEU_PUB]='0' 
+----------------------------------------
+SELECT     
+			CTY,CRP,MNF,MOL,INTPRD,PRD,PCK,[PCK_DATE],[PRD_AGE],OTC3,OTC4,NFC123,PRES,REG,[STR],PERIOD, 
+			sum(cast([EUN] as float))as [EUN],
+			sum(CAST([ESU] AS FLOAT))as [ESU],
+			sum(CAST([ECU] AS FLOAT))as [ECU],
+			sum(CAST([ELCD_PUB] AS FLOAT))as [ELCD_PUB],
+			sum(cast([EUSD_PUB] as float))as [EUSD_PUB], 
+			sum(CAST([EEUR_PUB] AS FLOAT))as [EEUR_PUB],
+			sum(CAST([ELEU_PUB] AS FLOAT))as [ELEU_PUB]
+
+			
+	into	Q03_REVNO_sum
+	FROM	Q03_REVNO
+group by CTY,CRP,MNF,MOL,INTPRD,PRD,PCK,[PCK_DATE],[PRD_AGE],OTC3,OTC4,NFC123,PRES,REG,[STR],PERIOD
+
+	
+
+    delete Q03_REVNO_sum
+	where   Q03_REVNO_sum.[EUN]='0' and 
+			Q03_REVNO_sum.[ESU]='0' and 
+			Q03_REVNO_sum.[ECU]='0' and 
+			Q03_REVNO_sum.[ELCD_PUB]='0' and 
+			Q03_REVNO_sum.[EUSD_PUB]='0' and 
+			Q03_REVNO_sum.[EEUR_PUB]='0' and 
+			Q03_REVNO_sum.[ELEU_PUB]='0' 
+----------------------------------------
+--drop table [GALDERMA_INTER_PTR_REVNO_QTR]	
+select	[COUNTRY] =	Q01_REVNO_sum.[CTY],
+		[CORPORATION] =	Q01_REVNO_sum.[CRP],
+		[MANUFACTURER] =	Q01_REVNO_sum.[MNF],
+		[MOLECULE] =	Q01_REVNO_sum.[MOL],
+		[INTERNATIONAL PRODUCT] =	Q01_REVNO_sum.[INTPRD],
+		[PRODUCT] =     Q01_REVNO_sum.[PRD],
+		[PACK] =	      Q01_REVNO_sum.[PCK],
+		[PACK DATE] =   Q01_REVNO_sum.[PCK_DATE],
+		[PRODUCT AGE] = Q01_REVNO_sum.[PRD_AGE],
+		[OTC3] =        Q01_REVNO_sum.[OTC3],
+		[OTC4] =        Q01_REVNO_sum.[OTC4],
+		[NFC123] =      Q01_REVNO_sum.[NFC123],
+		[PRESCRIPTION INDICATOR] = Q01_REVNO_sum.[PRES],
+		[REGISTRATION] =           Q01_REVNO_sum.[REG],
+		[STRENGTH] =               Q01_REVNO_sum.[STR],
+		[PERIOD]= Q01_REVNO_sum.[PERIOD],
+
+		[CU] = Q01_REVNO_sum.[CU],
+		[SU] = Q01_REVNO_sum.[SU],
+		[UN] = Q01_REVNO_sum.[UN],
+		[USD_PUB] = convert(numeric(12,2),Q01_REVNO_sum.[USD_PUB]),
+		[LCD_PUB] = convert(numeric(12,2),Q01_REVNO_sum.[LCD_PUB]),
+		[EUR_PUB] = convert(numeric(12,2),Q01_REVNO_sum.[EUR_PUB]),
+		[LEU_PUB] = convert(numeric(12,2),Q01_REVNO_sum.[LEU_PUB]),		
+		[AvPrice-PUB-USD] = convert(decimal(12,2),[USD_PUB]/NULLIF([UN],0)),
+		[AvPrice-PUB-LCD] = convert(decimal(12,2),[LCD_PUB]/NULLIF([UN],0)),
+		[AvPrice-PUB-EUR] = convert(decimal(12,2),[EUR_PUB]/NULLIF([UN],0)),
+		[AvPrice-PUB-LCE] = convert(decimal(12,2),[LEU_PUB]/NULLIF([UN],0)),
+
+		[PCU] =  convert(float,0.0),
+		[PSU] =  convert(float,0.0),
+		[PUN] =  convert(float,0.0),
+		[PUSD_PUB] =  convert(numeric(12,2),0),
+		[PLCD_PUB] =  convert(numeric(12,2),0),
+		[PEUR_PUB] =  convert(numeric(12,2),0),
+		[PLEU_PUB] =  convert(numeric(12,2),0),		
+		[AvPrice-PUB-USD(Rx)] = convert(decimal(12,2),0),
+		[AvPrice-PUB-LCD(Rx)] = convert(decimal(12,2),0),
+		[AvPrice-PUB-EUR(Rx)] = convert(decimal(12,2),0),
+		[AvPrice-PUB-LCE(Rx)] = convert(decimal(12,2),0),
+
+		[ECU] = convert(float,0.0),
+		[ESU] = convert(float,0.0),
+		[EUN] = convert(float,0.0),
+		[EUSD_PUB] = convert(numeric(12,2),0),
+		[ELCD_PUB] = convert(numeric(12,2),0),
+		[EEUR_PUB] = convert(numeric(12,2),0),
+		[ELEU_PUB] = convert(numeric(12,2),0),		
+		[AvPrice-PUB-USD(OTC)] = convert(decimal(12,2),0),
+		[AvPrice-PUB-LCD(OTC)] = convert(decimal(12,2),0),
+		[AvPrice-PUB-EUR(OTC)] = convert(decimal(12,2),0),
+		[AvPrice-PUB-LCE(OTC)] = convert(decimal(12,2),0)
+
+	into GALDERMA_INTER_PTR_REVNO_QTR
+	from Q01_REVNO_sum
+
+
+-----------------------problem-------------------------------------------------------------
+update GALDERMA_INTER_PTR_REVNO_QTR
+set	GALDERMA_INTER_PTR_REVNO_QTR.[PCU] = Q02_REVNO_sum.[PCU],
+	GALDERMA_INTER_PTR_REVNO_QTR.[PSU] = Q02_REVNO_sum.[PSU],
+	GALDERMA_INTER_PTR_REVNO_QTR.[PUN] = Q02_REVNO_sum.[PUN],
+	GALDERMA_INTER_PTR_REVNO_QTR.[PUSD_PUB] = Q02_REVNO_sum.[PUSD_PUB],
+	GALDERMA_INTER_PTR_REVNO_QTR.[PLCD_PUB] = Q02_REVNO_sum.[PLCD_PUB],
+	GALDERMA_INTER_PTR_REVNO_QTR.[PEUR_PUB] = Q02_REVNO_sum.[PEUR_PUB],
+	GALDERMA_INTER_PTR_REVNO_QTR.[PLEU_PUB] = Q02_REVNO_sum.[PLEU_PUB],
+
+	GALDERMA_INTER_PTR_REVNO_QTR.[AvPrice-PUB-USD(RX)] = Q02_REVNO_sum.[PUSD_PUB]/NULLIF(Q02_REVNO_sum.[PUN],0),
+	GALDERMA_INTER_PTR_REVNO_QTR.[AvPrice-PUB-LCD(RX)] = Q02_REVNO_sum.[PLCD_PUB]/NULLIF(Q02_REVNO_sum.[PUN],0),
+	GALDERMA_INTER_PTR_REVNO_QTR.[AvPrice-PUB-EUR(RX)] = Q02_REVNO_sum.[PEUR_PUB]/NULLIF(Q02_REVNO_sum.[PUN],0),
+	GALDERMA_INTER_PTR_REVNO_QTR.[AvPrice-PUB-LCE(RX)] = Q02_REVNO_sum.[PLEU_PUB]/NULLIF(Q02_REVNO_sum.[PUN],0)
+
+	from Q02_REVNO_sum
+	where   
+		GALDERMA_INTER_PTR_REVNO_QTR.[COUNTRY] =	Q02_REVNO_sum.[CTY] and
+		GALDERMA_INTER_PTR_REVNO_QTR.[CORPORATION] =	Q02_REVNO_sum.[CRP] and
+		GALDERMA_INTER_PTR_REVNO_QTR.[MANUFACTURER] =	Q02_REVNO_sum.[MNF] and
+		GALDERMA_INTER_PTR_REVNO_QTR.[MOLECULE] =	Q02_REVNO_sum.[MOL] and
+		GALDERMA_INTER_PTR_REVNO_QTR.[INTERNATIONAL PRODUCT] =	Q02_REVNO_sum.[INTPRD] and
+		GALDERMA_INTER_PTR_REVNO_QTR.[PRODUCT] =     Q02_REVNO_sum.[PRD] and
+		GALDERMA_INTER_PTR_REVNO_QTR.[PACK] =	      Q02_REVNO_sum.[PCK] and
+		GALDERMA_INTER_PTR_REVNO_QTR.[PACK DATE] =   Q02_REVNO_sum.[PCK_DATE] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[PRODUCT AGE] = Q02_REVNO_sum.[PRD_AGE] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[OTC3] =        Q02_REVNO_sum.[OTC3] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[OTC4] =        Q02_REVNO_sum.[OTC4] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[NFC123] =      Q02_REVNO_sum.[NFC123] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[PRESCRIPTION INDICATOR] = Q02_REVNO_sum.[PRES] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[REGISTRATION] =           Q02_REVNO_sum.[REG] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[STRENGTH] =               Q02_REVNO_sum.[STR] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[PERIOD]= Q02_REVNO_sum.[PERIOD]
+
+
+
+update GALDERMA_INTER_PTR_REVNO_QTR
+set	GALDERMA_INTER_PTR_REVNO_QTR.[ECU] = Q03_REVNO_sum.[ECU],
+	GALDERMA_INTER_PTR_REVNO_QTR.[ESU] = Q03_REVNO_sum.[ESU],
+	GALDERMA_INTER_PTR_REVNO_QTR.[EUN] = Q03_REVNO_sum.[EUN],
+	GALDERMA_INTER_PTR_REVNO_QTR.[EUSD_PUB]= Q03_REVNO_sum.[EUSD_PUB],
+	GALDERMA_INTER_PTR_REVNO_QTR.[ELCD_PUB] = Q03_REVNO_sum.[ELCD_PUB],
+	GALDERMA_INTER_PTR_REVNO_QTR.[EEUR_PUB] = Q03_REVNO_sum.[EEUR_PUB],
+	GALDERMA_INTER_PTR_REVNO_QTR.[ELEU_PUB] = Q03_REVNO_sum.[ELEU_PUB],
+
+	GALDERMA_INTER_PTR_REVNO_QTR.[AvPrice-PUB-USD(OTC)] = Q03_REVNO_sum.[EUSD_PUB]/NULLIF(Q03_REVNO_sum.[EUN],0),
+	GALDERMA_INTER_PTR_REVNO_QTR.[AvPrice-PUB-LCD(OTC)] = Q03_REVNO_sum.[ELCD_PUB]/NULLIF(Q03_REVNO_sum.[EUN],0),
+	GALDERMA_INTER_PTR_REVNO_QTR.[AvPrice-PUB-EUR(OTC)] = Q03_REVNO_sum.[EEUR_PUB]/NULLIF(Q03_REVNO_sum.[EUN],0),
+	GALDERMA_INTER_PTR_REVNO_QTR.[AvPrice-PUB-LCE(OTC)] = Q03_REVNO_sum.[ELEU_PUB]/NULLIF(Q03_REVNO_sum.[EUN],0)
+
+	from Q03_REVNO_sum
+	where   
+		GALDERMA_INTER_PTR_REVNO_QTR.[COUNTRY] =	Q03_REVNO_sum.[CTY] and
+		GALDERMA_INTER_PTR_REVNO_QTR.[CORPORATION] =	Q03_REVNO_sum.[CRP] and
+		GALDERMA_INTER_PTR_REVNO_QTR.[MANUFACTURER] =	Q03_REVNO_sum.[MNF] and
+		GALDERMA_INTER_PTR_REVNO_QTR.[MOLECULE] =	Q03_REVNO_sum.[MOL] and
+		GALDERMA_INTER_PTR_REVNO_QTR.[INTERNATIONAL PRODUCT] =	Q03_REVNO_sum.[INTPRD] and
+		GALDERMA_INTER_PTR_REVNO_QTR.[PRODUCT] =     Q03_REVNO_sum.[PRD] and
+		GALDERMA_INTER_PTR_REVNO_QTR.[PACK] =	      Q03_REVNO_sum.[PCK] and
+		GALDERMA_INTER_PTR_REVNO_QTR.[PACK DATE] =   Q03_REVNO_sum.[PCK_DATE] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[PRODUCT AGE] = Q03_REVNO_sum.[PRD_AGE] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[OTC3] =        Q03_REVNO_sum.[OTC3] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[OTC4] =        Q03_REVNO_sum.[OTC4] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[NFC123] =      Q03_REVNO_sum.[NFC123] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[PRESCRIPTION INDICATOR] = Q03_REVNO_sum.[PRES] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[REGISTRATION] =           Q03_REVNO_sum.[REG] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[STRENGTH] =               Q03_REVNO_sum.[STR] and		
+		GALDERMA_INTER_PTR_REVNO_QTR.[PERIOD]= Q03_REVNO_sum.[PERIOD]
+ 
+
+
+
+DELETE FROM GALDERMA_INTER_PTR_REVNO_QTR
+WHERE PERIOD LIKE '%YTD%'
+
+DELETE FROM GALDERMA_INTER_PTR_REVNO_QTR
+WHERE PERIOD LIKE '%YEAR%'
+DELETE FROM GALDERMA_INTER_PTR_REVNO_QTR
+WHERE PERIOD LIKE '%MAT%'
+--	
+ UPDATE GALDERMA_INTER_PTR_REVNO_QTR	SET PERIOD = REPLACE(PERIOD,'QTR_','')		
+
+UPDATE GALDERMA_INTER_PTR_REVNO_QTR	SET PERIOD = REPLACE(PERIOD, left((right([PERIOD],5)),3),'/')
+
+UPDATE GALDERMA_INTER_PTR_REVNO_QTR	SET [PRODUCT AGE] = REPLACE([PRODUCT AGE],'YEARS OLD','')
+UPDATE GALDERMA_INTER_PTR_REVNO_QTR	SET [PACK DATE] = REPLACE([PACK DATE],'PACK LAUNCH ','')
+UPDATE GALDERMA_INTER_PTR_REVNO_QTR	SET [PACK DATE] = substring ([PACK DATE], 4,7)+'/'+substring ([PACK DATE], 1,2)
+end
+
+
+
+--exec [GALDERMA_PROCESSING_PTR_OTC_RX_REVNO_QTH]
