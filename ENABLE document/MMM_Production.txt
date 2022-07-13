@@ -1,0 +1,55 @@
+-------------------- Data base part --------------
+RDP
+	162.44.196.245
+	INTERNAL\DACASVC-GDCRDPAdmin
+	Wh2t3v3r
+
+Open SQL Server Management Studio
+	DB Name: NOVARTIS_MMM_RAW_DATA_DB
+	Table Name: DataLiveStatus
+	Job name: MMMCubeProcessTest
+
+Open IE
+	Go to: http://custemea6.imshealth.com/NOVARTIS/MMM/TEST/login/
+	login with User name : ims, password: ims
+	For Cache clear
+		go to: http://custemea6.imshealth.com/NOVARTIS/MMM/TEST/clearcache
+		press both of the buttons
+		press 'Return Home'
+
+browse page 'Market Analysis'
+	you will see the heading
+
+Mail to team saying TEST site is updated and wait for their confirmation.
+
+
+--------------------------- Analysis services part -------------
+We will take backup of 'NOVARTIS_MMM_TEST'
+Location	: E:\MMM
+
+Winow will popup
+Database	: NOVARTIS_MMM_TEST
+Bacup file	: E:\MMM\NOVARTIS_MMM_TEST.abf
+
+uncheck > 'Apply Compression' & 'Encrypt backup file'
+
+
+Delete 'NOVARTIS_MMM_PROD'
+
+restore 'E:\MMM\NOVARTIS_MMM_TEST.abf' as 'NOVARTIS_MMM_PROD'
+uncheck > 'Include security information'
+
+rename 'E:\MMM\NOVARTIS_MMM_TEST.abf'
+
+Go to: http://custemea6.imshealth.com/NOVARTIS/MMM/PROD/login/
+	login with User name : ims, password: ims
+	For Cache clear
+		go to: http://custemea6.imshealth.com/NOVARTIS/MMM/PROD/clearcache
+		press both of the buttons
+		press 'Return Home'
+
+PROD is ready > Send a confirmation mail to onshore.
+
+
+
+

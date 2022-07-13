@@ -1,0 +1,196 @@
+﻿<Dimension xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="75c2b559-1b67-45be-b9df-64913cb14087" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>DimBusinessFranchise</ID>
+  <Name>DimBusinessFranchise</Name>
+  <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+  <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+  <Annotations>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramLayout</Name>
+      <Value>
+        <dds xmlns="">
+          <diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="MSDDS.Rectilinear" defaultlineroute="MSDDS.Rectilinear" version="7" nextobject="2" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="-1250" scrolltop="-3783" gridx="150" gridy="150" marginx="5000" marginy="5000" zoom="100" x="7329" y="9869" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="0" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}">
+            <font>
+              <ddsxmlobjectstreamwrapper binary="01000000900144420100065461686f6d61" />
+            </font>
+            <mouseicon>
+              <ddsxmlobjectstreamwrapper binary="6c74000000000000" />
+            </mouseicon>
+          </diagram>
+          <layoutmanager>
+            <ddsxmlobj />
+          </layoutmanager>
+          <ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="DimBusinessFranchiseView" left="20" top="0" logicalid="1" controlid="1" masterid="0" hint1="0" hint2="0" width="5000" height="3836" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
+            <control>
+              <ddsxmlobjectstreaminitwrapper binary="0008000088130000fc0e0000" />
+            </control>
+            <layoutobject>
+              <ddsxmlobj>
+                <property name="LogicalObject" value="dbo_DimBusinessFranchiseView" vartype="8" />
+              </ddsxmlobj>
+            </layoutobject>
+            <shape groupshapeid="0" groupnode="0" />
+          </ddscontrol>
+        </dds>
+      </Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowRelationshipNames</Name>
+      <Value>false</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:UseDiagramDefaultLayout</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortLeft</Name>
+      <Value>-1250</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortTop</Name>
+      <Value>-3783</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingLeft</Name>
+      <Value>20</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramZoom</Name>
+      <Value>100</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ARDiagramLayout</Name>
+      <Value>
+        <DiagramLayout ZoomPercent="100" ViewPortX="0" ViewPortY="0" xmlns="">
+          <Shapes NodeWidth="171">
+            <Shape Id="Nvs Business Franchise ID" Expanded="true">
+              <Attributes>
+                <Attribute Id="Nvs Business Franchise ID" />
+              </Attributes>
+              <Position x="20" y="20" />
+            </Shape>
+            <Shape Id="Nvs Business Franch Group Code" Expanded="true">
+              <Attributes>
+                <Attribute Id="Nvs Business Franch Group Code" />
+                <Attribute Id="Indication Area Grp Code" />
+              </Attributes>
+              <Position x="238" y="20" />
+            </Shape>
+          </Shapes>
+        </DiagramLayout>
+      </Value>
+    </Annotation>
+  </Annotations>
+  <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
+  <State>Unprocessed</State>
+  <Source xsi:type="DataSourceViewBinding" dwd:design-time-name="c9ab5509-6b5f-4dab-a59d-25685ba24b99">
+    <DataSourceViewID>Vifor Pharma Brand Management Dashboard</DataSourceViewID>
+  </Source>
+  <UnknownMember>Hidden</UnknownMember>
+  <ErrorConfiguration dwd:design-time-name="6cbc977a-45a8-4c33-a2bf-71ca898ffc4b">
+    <KeyNotFound>ReportAndStop</KeyNotFound>
+    <KeyDuplicate>ReportAndStop</KeyDuplicate>
+    <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+  </ErrorConfiguration>
+  <CurrentStorageMode>Molap</CurrentStorageMode>
+  <Attributes>
+    <Attribute dwd:design-time-name="587c1880-913c-487c-802c-57ac8b33883e">
+      <ID>Nvs Business Franchise ID</ID>
+      <Name>Nvs Business Franchise ID</Name>
+      <Usage>Key</Usage>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="c235feb0-1e53-4aba-9f24-a7d4631ccb98">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="64b89dd9-bf2b-43ac-8209-9f260ddfc9cb">
+            <TableID>dbo_DimBusinessFranchiseView</TableID>
+            <ColumnID>NvsBusinessFranchiseID</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="2f7ab7f3-4710-4b3c-b429-c2e3a0e7586c">
+          <AttributeID>Nvs Business Franch Group Code</AttributeID>
+          <Name>BusinessFranchiseGrp</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="2b9536c2-6d7b-49c7-b433-a598b9d07ab4">
+          <AttributeID>Is Visible</AttributeID>
+          <Name>IsVisible</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="558b05e7-8160-4d60-9536-2d8d4f44eee7">
+      <ID>Nvs Business Franch Group Code</ID>
+      <Name>BusinessFranchiseGrp</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="dc7e11ff-f921-48ac-853b-4888ffe9aef1">
+          <DataType>WChar</DataType>
+          <DataSize>250</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="322a00bf-2e62-40b4-9abf-11e4efe47cfe">
+            <TableID>dbo_DimBusinessFranchiseView</TableID>
+            <ColumnID>NvsBusinessFranchGroupCode</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="cad1b7ed-e015-4769-92c6-4974e653962e">
+        <DataType>WChar</DataType>
+        <DataSize>250</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="45cbf09d-e889-4cc0-a110-c1133e320b83">
+          <TableID>dbo_DimBusinessFranchiseView</TableID>
+          <ColumnID>NvsBusinessFranchGroupDesc</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="b4c23c4f-1a59-4ae3-9e74-8dc0454cc618">
+          <AttributeID>Indication Area Grp Code</AttributeID>
+          <Name>IndicationAreaGrp</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="752af033-6af8-4ee0-a89a-79448af15618">
+      <ID>Indication Area Grp Code</ID>
+      <Name>IndicationAreaGrp</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="cce6ccdb-9132-4428-b339-a1560c4ec1b4">
+          <DataType>WChar</DataType>
+          <DataSize>250</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="d864de66-5cef-4588-aac2-2c991280d315">
+            <TableID>dbo_DimBusinessFranchiseView</TableID>
+            <ColumnID>IndicationAreaGrpCode</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="fbee3aaf-d40b-40db-89b3-0dd5c8c2c2eb">
+        <DataType>WChar</DataType>
+        <DataSize>250</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="f9c7f60a-aeb1-4054-a9b2-1591796c8a81">
+          <TableID>dbo_DimBusinessFranchiseView</TableID>
+          <ColumnID>IndicationAreaGrpCode</ColumnID>
+        </Source>
+      </NameColumn>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="b5bec609-75d0-4403-b1cd-f59272f3dd25">
+      <ID>Is Visible</ID>
+      <Name>IsVisible</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="50e1401f-be1e-4083-bb73-87ca98229cfb">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="bb1e1b64-468d-46de-8e0e-cdd7df4790bf">
+            <TableID>dbo_DimBusinessFranchiseView</TableID>
+            <ColumnID>isVisible</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+  </Attributes>
+</Dimension>

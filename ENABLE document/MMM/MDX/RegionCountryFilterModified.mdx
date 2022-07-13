@@ -1,0 +1,51 @@
+-------------------- Region - Sub region - Country Filter ----------------
+//0||0
+//@geo=[DimGeoView].[HGeo].[All]
+//@level=[DimGeoView].[HGeo].[Region]
+//@datatype=MTH
+with
+
+member [DimGeoView].[HGeo].[All  ]
+	as [DimGeoView].[HGeo].[All]
+
+member [Measures].[GeoName] as
+	case when [DimGeoView].[HGeo].currentmember is [DimGeoView].[HGeo].[All  ] then "All"
+	else 
+		string(
+		case when [DimGeoView].[HGeo].currentmember.level.ordinal = 4 then 0 else 
+		[DimGeoView].[HGeo].currentmember.level.ordinal end *2,
+		chr(160))
+		+[DimGeoView].[HGeo].currentmember.name 
+	end
+
+member [Measures].[GeoValue] as
+	case when [DimGeoView].[HGeo].currentmember is [DimGeoView].[HGeo].[All  ] 
+		then [DimGeoView].[HGeo].[All].MEMBER_UNIQUE_NAME
+		else [DimGeoView].[HGeo].currentmember.MEMBER_UNIQUE_NAME end
+
+set Panels as
+	IIF([DimGeoView].[HGeo].[Region] is [DimGeoView].[HGeo].[Country],
+		order(descendants([DimGeoView].[HGeo].[All],[DimGeoView].[HGeo].[Country])
+		,[DimGeoView].[HGeo].currentmember.Properties("Name"),basc),
+		filter(
+			{[DimGeoView].[HGeo].members - [DimGeoView].[HGeo].[All]},
+			[DimGeoView].[HGeo].currentmember.level.ordinal  <= 3
+		)
+	)
+
+select 
+{
+[Measures].[GeoName], //Name||1||||
+[Measures].[GeoValue] //Value||1||||
+}  on columns,
+{
+	[DimGeoView].[HGeo].[All  ],
+	panels
+} //Geo||0|| 
+on rows
+from [MMMCube]
+where ([DimGeoView].[DataType].&[MTH])
+
+
+
+//@region=$Region${,}@country=$Country${,}@franchise=$Franchise${,}@period=$Period${,}@measure=[DimMeasureNames].[Name].&[LCUSD]{,}@datatype=MTH

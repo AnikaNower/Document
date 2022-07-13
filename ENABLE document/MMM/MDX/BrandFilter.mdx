@@ -1,0 +1,80 @@
+//0||0
+with
+
+member [Measures].[OrderKey] as
+	case when [DimFranchiseBrand].[HFranchiseBrand].currentmember.level.ordinal = 5
+		then [DimFranchiseBrand].[HFranchiseBrand].currentmember.name
+	else
+		[DimFranchiseBrand].[HFranchiseBrand].currentmember.parent.name +"  "
+		+ [DimFranchiseBrand].[HFranchiseBrand].currentmember.name end
+
+member [Measures].[Name] as
+	case when [DimFranchiseBrand].[HFranchiseBrand].currentmember is [DimFranchiseBrand].[HFranchiseBrand].[All]
+		then IIF([DimFranchiseBrand].[GroupType].currentmember is [DimFranchiseBrand].[GroupType].&[1],
+					"[A Brands]",
+					IIF([DimFranchiseBrand].[GroupType].currentmember is [DimFranchiseBrand].[GroupType].&[0],
+					"-----",
+					"All")
+				)
+	else
+		string(
+		case when [DimFranchiseBrand].[HFranchiseBrand].currentmember.level.ordinal = 5 then 0 else 
+		1 end *2,chr(160))
+		+[DimFranchiseBrand].[HFranchiseBrand].currentmember.name end
+
+member [Measures].[Value] as
+	case when [DimFranchiseBrand].[HFranchiseBrand].currentmember is [DimFranchiseBrand].[HFranchiseBrand].[All]
+		then [DimFranchiseBrand].[GroupType].currentmember.MEMBER_UNIQUE_NAME
+	when [DimFranchiseBrand].[GroupType].currentmember is [DimFranchiseBrand].[GroupType].&[0]
+		then "----"
+	else
+		[DimFranchiseBrand].[HFranchiseBrand].currentmember.MEMBER_UNIQUE_NAME
+	end
+
+set [A Brands] as
+	([DimFranchiseBrand].[HFranchiseBrand].[All],
+	[DimFranchiseBrand].[GroupType].&[1],
+	[DimFranchiseBrand].[TypeOfBrands].[All])
+
+set [A Brands Set] as
+	(order(filter([DimFranchiseBrand].[HFranchiseBrand].members,
+		[DimFranchiseBrand].[HFranchiseBrand].currentmember.level.ordinal > 4)
+		,[Measures].[OrderKey],basc)
+	,[DimFranchiseBrand].[GroupType].&[1]
+	,[DimFranchiseBrand].[TypeOfBrands].[All])
+
+set	[All Brands] as
+	([DimFranchiseBrand].[HFranchiseBrand].[All]
+	,[DimFranchiseBrand].[GroupType].[All]
+	,[DimFranchiseBrand].[TypeOfBrands].[All])
+
+set	[All Brands Set] as
+	(order(filter([DimFranchiseBrand].[HFranchiseBrand].members,
+		[DimFranchiseBrand].[HFranchiseBrand].currentmember.level.ordinal > 4)
+		,[Measures].[OrderKey],basc)
+	,[DimFranchiseBrand].[GroupType].[All]
+	,[DimFranchiseBrand].[TypeOfBrands].&[Novartis])
+	
+set [Seperator] as
+	([DimFranchiseBrand].[HFranchiseBrand].[All]
+	,[DimFranchiseBrand].[GroupType].&[0]
+	,[DimFranchiseBrand].[TypeOfBrands].[All])
+		
+select
+{
+	[Measures].[Name],	//Name||1||||
+	[Measures].[Value]	//Value||1||||
+} on columns,
+{
+	[All Brands],
+	[A Brands],
+	[A Brands Set],
+	[Seperator],
+	[All Brands Set]
+}//Geo||0||$$level||0||$$level1||0|| 
+on rows
+from [MMMCube]
+where
+(
+[DimMeasureNames].[Name].&[LCUSD]
+)

@@ -1,0 +1,5 @@
+FTP Server:   ftp01.us.imshealth.com (162.44.221.45)
+Username:     T0059
+Password:     Minne626
+
+need to upload the data in OUT Folder.

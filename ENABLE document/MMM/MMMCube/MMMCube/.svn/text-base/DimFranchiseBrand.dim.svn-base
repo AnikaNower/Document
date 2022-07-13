@@ -1,0 +1,401 @@
+﻿<Dimension xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="7c7d745e-b4c8-4d66-8b5a-a0f80244d54e" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>DimFranchiseBrand</ID>
+  <Name>DimFranchiseBrand</Name>
+  <CreatedTimestamp>0001-01-01T00:00:00Z</CreatedTimestamp>
+  <LastSchemaUpdate>0001-01-01T00:00:00Z</LastSchemaUpdate>
+  <Annotations>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramLayout</Name>
+      <Value>
+        <dds xmlns="">
+          <diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="MSDDS.Rectilinear" defaultlineroute="MSDDS.Rectilinear" version="7" nextobject="3" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="-1660" scrolltop="-4458" gridx="150" gridy="150" marginx="5000" marginy="5000" zoom="100" x="7567" y="13917" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="0" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}">
+            <font>
+              <ddsxmlobjectstreamwrapper binary="01000000900144420100065461686f6d61" />
+            </font>
+            <mouseicon>
+              <ddsxmlobjectstreamwrapper binary="6c74000000000000" />
+            </mouseicon>
+          </diagram>
+          <layoutmanager>
+            <ddsxmlobj />
+          </layoutmanager>
+          <ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="DimFranchiseBrandView" left="20" top="0" logicalid="2" controlid="1" masterid="0" hint1="0" hint2="0" width="4128" height="5000" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
+            <control>
+              <ddsxmlobjectstreaminitwrapper binary="000800002010000088130000" />
+            </control>
+            <layoutobject>
+              <ddsxmlobj>
+                <property name="LogicalObject" value="dbo_DimFranchiseBrandView" vartype="8" />
+              </ddsxmlobj>
+            </layoutobject>
+            <shape groupshapeid="0" groupnode="0" />
+          </ddscontrol>
+        </dds>
+      </Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowRelationshipNames</Name>
+      <Value>false</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:UseDiagramDefaultLayout</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortLeft</Name>
+      <Value>-1660</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortTop</Name>
+      <Value>-4458</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingLeft</Name>
+      <Value>20</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramZoom</Name>
+      <Value>100</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ARDiagramLayout</Name>
+      <Value>
+        <DiagramLayout ZoomPercent="100" ViewPortX="9" ViewPortY="0" xmlns="">
+          <Shapes NodeWidth="135">
+            <Shape Id="Brand ID" Expanded="true">
+              <Attributes>
+                <Attribute Id="Brand ID" />
+                <Attribute Id="Group Type" />
+              </Attributes>
+              <Position x="20" y="20" />
+            </Shape>
+            <Shape Id="Brand Code" Expanded="true">
+              <Attributes>
+                <Attribute Id="Brand Code" />
+              </Attributes>
+              <Position x="193" y="20" />
+            </Shape>
+            <Shape Id="Brand Group Code" Expanded="true">
+              <Attributes>
+                <Attribute Id="Brand Group Code" />
+              </Attributes>
+              <Position x="367" y="20" />
+            </Shape>
+            <Shape Id="Nvs Atc Code" Expanded="true">
+              <Attributes>
+                <Attribute Id="Nvs Atc Code" />
+              </Attributes>
+              <Position x="541" y="20" />
+            </Shape>
+            <Shape Id="Indication Area Code" Expanded="true">
+              <Attributes>
+                <Attribute Id="Indication Area Code" />
+              </Attributes>
+              <Position x="715" y="20" />
+            </Shape>
+            <Shape Id="Indication Area Grp Code" Expanded="true">
+              <Attributes>
+                <Attribute Id="Indication Area Grp Code" />
+              </Attributes>
+              <Position x="888" y="20" />
+            </Shape>
+            <Shape Id="Therapeutic Area Code" Expanded="false">
+              <Attributes>
+                <Attribute Id="Therapeutic Area Code" />
+              </Attributes>
+              <Position x="1062" y="20" />
+            </Shape>
+          </Shapes>
+        </DiagramLayout>
+      </Value>
+    </Annotation>
+  </Annotations>
+  <LastProcessed>0001-01-01T00:00:00Z</LastProcessed>
+  <State>Unprocessed</State>
+  <Source xsi:type="DataSourceViewBinding" dwd:design-time-name="caf05b4c-855b-4d3d-9296-63d046daca59">
+    <DataSourceViewID>Vifor Pharma Brand Management Dashboard</DataSourceViewID>
+  </Source>
+  <UnknownMember>Hidden</UnknownMember>
+  <ErrorConfiguration dwd:design-time-name="5d507ed9-0450-47e7-9db5-3fdbdf0d00fc">
+    <KeyNotFound>ReportAndStop</KeyNotFound>
+    <KeyDuplicate>ReportAndStop</KeyDuplicate>
+    <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+  </ErrorConfiguration>
+  <CurrentStorageMode>Molap</CurrentStorageMode>
+  <Attributes>
+    <Attribute dwd:design-time-name="d180c650-c94a-4584-b48a-f6353d4a2575">
+      <ID>Brand ID</ID>
+      <Name>Brand ID</Name>
+      <Usage>Key</Usage>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="de68396f-9148-42f4-b6fd-0a1b0ac7cbaf">
+          <NullProcessing>UnknownMember</NullProcessing>
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="6eac17ae-6a94-4446-84cb-d558b06cf08c">
+            <TableID>dbo_DimFranchiseBrandView</TableID>
+            <ColumnID>BrandID</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="c2720fbc-cc61-4d29-acd3-c7e893c512b1">
+          <AttributeID>Group Type</AttributeID>
+          <Name>GroupType</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="4ece38c7-f85b-4851-99bd-89a427dda9ba">
+          <AttributeID>Brand Code</AttributeID>
+          <Name>Brand</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="7798a7f6-ed3c-4b1e-a759-ff177212821b">
+          <AttributeID>Type Of Brands</AttributeID>
+          <Name>TypeOfBrands</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="9984d99c-f506-4dba-85e8-8957a15655ce">
+      <ID>Brand Code</ID>
+      <Name>Brand</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="b8d38586-47f3-44a9-b75f-f82ee48ce04a">
+          <DataType>WChar</DataType>
+          <DataSize>250</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="2718d5f1-a236-4e72-8c12-4ab2a64ea0b9">
+            <TableID>dbo_DimFranchiseBrandView</TableID>
+            <ColumnID>BrandCode</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="ccb45b45-79ac-48b9-967b-9c33d7e9ebc8">
+        <DataType>WChar</DataType>
+        <DataSize>250</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="48e6ca9f-f8f6-4d8f-8ee5-23ba61165184">
+          <TableID>dbo_DimFranchiseBrandView</TableID>
+          <ColumnID>BrandDesc</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="d42a39ab-5fc2-417d-8c11-f2d55ed714c6">
+          <AttributeID>Brand Group Code</AttributeID>
+          <Name>BrandGroup</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="adf6f867-45ce-4160-987b-9efad609f9ca">
+      <ID>Brand Group Code</ID>
+      <Name>BrandGroup</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="84f95f31-7509-45d6-982b-3cd4500efcc0">
+          <DataType>WChar</DataType>
+          <DataSize>250</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="476d0304-02d5-4071-933f-d627c137c144">
+            <TableID>dbo_DimFranchiseBrandView</TableID>
+            <ColumnID>BrandGroupCode</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="68fd13be-6184-409c-8567-522473926a03">
+        <DataType>WChar</DataType>
+        <DataSize>250</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="b3d42f4d-0e94-4dcc-a11d-cec6d5af7926">
+          <TableID>dbo_DimFranchiseBrandView</TableID>
+          <ColumnID>BrandGroupDesc</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="fcf08068-27bf-49dc-b6d8-be81448f86c9">
+          <AttributeID>Nvs Atc Code</AttributeID>
+          <Name>Market</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="f8bad49a-96b8-4ed4-a545-6f3139c0f413">
+      <ID>Nvs Atc Code</ID>
+      <Name>Market</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="2d107078-7463-48f7-80ba-5573efbc42ed">
+          <DataType>WChar</DataType>
+          <DataSize>250</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="18521295-41a9-4f4b-9535-86896fc1afe3">
+            <TableID>dbo_DimFranchiseBrandView</TableID>
+            <ColumnID>NvsAtcCode</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="8bcd4f03-1ebf-4948-82a0-97da305de073">
+        <DataType>WChar</DataType>
+        <DataSize>250</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="c9db01a5-4f3e-4283-b0c6-e35df980726f">
+          <TableID>dbo_DimFranchiseBrandView</TableID>
+          <ColumnID>NvsAtcDesc</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="a662031a-dd72-4e46-9265-89d00459fbe2">
+          <AttributeID>Indication Area Code</AttributeID>
+          <Name>Franchise</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="d85dda39-b624-44e9-b887-18090f23336f">
+      <ID>Indication Area Code</ID>
+      <Name>Franchise</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="c0be875f-ea38-402f-83de-c99feae3a728">
+          <DataType>WChar</DataType>
+          <DataSize>250</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="d52dc04b-8bbf-4a88-ad57-cebde3b7dee6">
+            <TableID>dbo_DimFranchiseBrandView</TableID>
+            <ColumnID>IndicationAreaCode</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="f6afa852-6bfa-494a-94e7-b72f285df759">
+        <DataType>WChar</DataType>
+        <DataSize>250</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="8bc6efd1-f96e-48c0-87de-7b07b376300d">
+          <TableID>dbo_DimFranchiseBrandView</TableID>
+          <ColumnID>IndicationAreaDesc</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="2280b4d3-581c-45a9-ab62-3f1c27b8e757">
+          <AttributeID>Indication Area Grp Code</AttributeID>
+          <Name>FranchiseGroup</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="12247b07-aabe-44bf-b58a-0ee665d37202">
+      <ID>Therapeutic Area Code</ID>
+      <Name>TherapeuticArea</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="a147bc23-7e78-41fe-b8e6-adeb6c47c3d5">
+          <DataType>WChar</DataType>
+          <DataSize>250</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="36618d83-edc2-43a6-8b1d-f61449d2c086">
+            <TableID>dbo_DimFranchiseBrandView</TableID>
+            <ColumnID>TherapeuticAreaCode</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="49b262d3-e706-4666-909d-530aee497413">
+        <DataType>WChar</DataType>
+        <DataSize>250</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="8ec76335-d806-4d11-bb75-049143c66db2">
+          <TableID>dbo_DimFranchiseBrandView</TableID>
+          <ColumnID>TherapeuticAreaDesc</ColumnID>
+        </Source>
+      </NameColumn>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="63f46aff-35cf-411e-9b6b-eae6609bb781">
+      <ID>Indication Area Grp Code</ID>
+      <Name>FranchiseGroup</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="4991a086-2e57-4212-ba48-a5abc124c0ab">
+          <DataType>WChar</DataType>
+          <DataSize>250</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="2b248bab-2d43-4798-8a35-8ec7691d3d88">
+            <TableID>dbo_DimFranchiseBrandView</TableID>
+            <ColumnID>IndicationAreaGrpCode</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="5b653e4a-18ee-4efc-8dd6-7a0ed13f4361">
+        <DataType>WChar</DataType>
+        <DataSize>250</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="1a9b6127-1f33-46e7-81c8-135e99ff052d">
+          <TableID>dbo_DimFranchiseBrandView</TableID>
+          <ColumnID>IndicationAreaGrpDesc</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="96790577-ed07-4caf-8432-0100a7d532e7">
+          <AttributeID>Therapeutic Area Code</AttributeID>
+          <Name>TherapeuticArea</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="b69417c7-0f41-41b9-b752-24dd5d4b48a2">
+      <ID>Group Type</ID>
+      <Name>GroupType</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="ee882a61-22d8-4779-8663-45f370b36663">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="398ad98a-d392-447e-b8d3-c3a19f78e8c7">
+            <TableID>dbo_DimFranchiseBrandView</TableID>
+            <ColumnID>GroupType</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="5db32f75-8127-4a83-a249-69d929b85258">
+      <ID>Type Of Brands</ID>
+      <Name>TypeOfBrands</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="d25ac4cf-748a-4aa7-87fc-f7597a4d0399">
+          <DataType>WChar</DataType>
+          <DataSize>10</DataSize>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="cc953c8f-efc6-4f8a-bff4-98e55098c06f">
+            <TableID>dbo_DimFranchiseBrandView</TableID>
+            <ColumnID>TypeOfBrands</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+  </Attributes>
+  <Hierarchies>
+    <Hierarchy dwd:design-time-name="5a80dea5-dcac-43da-96be-89e38939ef28">
+      <ID>Hierarchy</ID>
+      <Name>HFranchiseBrand</Name>
+      <Levels>
+        <Level dwd:design-time-name="a2ce3dae-b213-4492-97a9-76ae3561ed41">
+          <ID>TherapeuticArea</ID>
+          <Name>TherapeuticArea</Name>
+          <SourceAttributeID>Therapeutic Area Code</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="76c5b763-fb76-44af-80ec-c27080cfcb7c">
+          <ID>FranchiseGroup</ID>
+          <Name>FranchiseGroup</Name>
+          <SourceAttributeID>Indication Area Grp Code</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="c7bec8b3-49be-4d7f-99f4-5b3d8b6cf094">
+          <ID>Franchise</ID>
+          <Name>Franchise</Name>
+          <SourceAttributeID>Indication Area Code</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="e7904d2d-80f4-4b8d-a829-d2353bcc6a5c">
+          <ID>Market</ID>
+          <Name>Market</Name>
+          <SourceAttributeID>Nvs Atc Code</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="3bb5eea3-5ed8-4065-8b79-decf9bf0a7db">
+          <ID>BrandGroup</ID>
+          <Name>BrandGroup</Name>
+          <SourceAttributeID>Brand Group Code</SourceAttributeID>
+        </Level>
+        <Level dwd:design-time-name="e2febfb7-9774-4e44-a3cb-9c7afd84f7ee">
+          <ID>Brand</ID>
+          <Name>Brand</Name>
+          <SourceAttributeID>Brand Code</SourceAttributeID>
+        </Level>
+      </Levels>
+    </Hierarchy>
+  </Hierarchies>
+</Dimension>

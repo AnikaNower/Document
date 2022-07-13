@@ -1,0 +1,298 @@
+﻿<Dimension xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0" dwd:design-time-name="a53f7aeb-d555-4905-a748-e1a97e4d0972" xmlns="http://schemas.microsoft.com/analysisservices/2003/engine">
+  <ID>DIM PERIOD</ID>
+  <Name>DimPeriod</Name>
+  <CreatedTimestamp>0001-01-01T05:00:00Z</CreatedTimestamp>
+  <LastSchemaUpdate>0001-01-01T05:00:00Z</LastSchemaUpdate>
+  <Annotations>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramLayout</Name>
+      <Value>
+        <dds xmlns="">
+          <diagram fontclsid="{0BE35203-8F91-11CE-9DE3-00AA004BB851}" mouseiconclsid="{0BE35204-8F91-11CE-9DE3-00AA004BB851}" defaultlayout="MSDDS.Rectilinear" defaultlineroute="MSDDS.Rectilinear" version="7" nextobject="3" scale="100" pagebreakanchorx="0" pagebreakanchory="0" pagebreaksizex="0" pagebreaksizey="0" scrollleft="-2224" scrolltop="-4458" gridx="150" gridy="150" marginx="5000" marginy="5000" zoom="100" x="6800" y="14526" backcolor="15334399" defaultpersistence="2" PrintPageNumbersMode="3" PrintMarginTop="0" PrintMarginBottom="635" PrintMarginLeft="0" PrintMarginRight="0" marqueeselectionmode="0" mousepointer="0" snaptogrid="0" autotypeannotation="1" showscrollbars="0" viewpagebreaks="0" donotforceconnectorsbehindshapes="1" backpictureclsid="{00000000-0000-0000-0000-000000000000}">
+            <font>
+              <ddsxmlobjectstreamwrapper binary="01000000900144420100065461686f6d61" />
+            </font>
+            <mouseicon>
+              <ddsxmlobjectstreamwrapper binary="6c74000000000000" />
+            </mouseicon>
+          </diagram>
+          <layoutmanager>
+            <ddsxmlobj />
+          </layoutmanager>
+          <ddscontrol controlprogid="DdsShapes.DdsObjectManagedBridge.2" tooltip="DIM_PERIOD" left="20" top="0" logicalid="2" controlid="1" masterid="0" hint1="0" hint2="0" width="3291" height="7276" noresize="0" nomove="0" nodefaultattachpoints="0" autodrag="1" usedefaultiddshape="1" selectable="1" showselectionhandles="1" allownudging="1" isannotation="0" dontautolayout="0" groupcollapsed="0" tabstop="1" visible="1" snaptogrid="0">
+            <control>
+              <ddsxmlobjectstreaminitwrapper binary="00080000db0c00006c1c0000" />
+            </control>
+            <layoutobject>
+              <ddsxmlobj>
+                <property name="LogicalObject" value="dbo_DIM_PERIOD" vartype="8" />
+              </ddsxmlobj>
+            </layoutobject>
+            <shape groupshapeid="0" groupnode="0" />
+          </ddscontrol>
+        </dds>
+      </Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowFriendlyNames</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ShowRelationshipNames</Name>
+      <Value>false</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:UseDiagramDefaultLayout</Name>
+      <Value>true</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortLeft</Name>
+      <Value>-2224</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramViewPortTop</Name>
+      <Value>-4458</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingLeft</Name>
+      <Value>20</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramBoundingTop</Name>
+      <Value>0</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:DiagramZoom</Name>
+      <Value>100</Value>
+    </Annotation>
+    <Annotation>
+      <Name>http://schemas.microsoft.com/DataWarehouse/Designer/1.0:ARDiagramLayout</Name>
+      <Value>
+        <DiagramLayout ZoomPercent="100" ViewPortX="0" ViewPortY="0" xmlns="">
+          <Shapes NodeWidth="127">
+            <Shape Id="ID" Expanded="true">
+              <Attributes>
+                <Attribute Id="ID" />
+                <Attribute Id="MAT KEY" />
+                <Attribute Id="RQT KEY" />
+                <Attribute Id="YTD KEY" />
+              </Attributes>
+              <Position x="20" y="20" />
+            </Shape>
+            <Shape Id="MTH KEY" Expanded="true">
+              <Attributes>
+                <Attribute Id="MTH KEY" />
+                <Attribute Id="QTR KEY" />
+              </Attributes>
+              <Position x="183" y="20" />
+            </Shape>
+          </Shapes>
+        </DiagramLayout>
+      </Value>
+    </Annotation>
+  </Annotations>
+  <LastProcessed>0001-01-01T05:00:00Z</LastProcessed>
+  <State>Unprocessed</State>
+  <Source xsi:type="DataSourceViewBinding" dwd:design-time-name="f61ec3bc-bd79-45bb-8e9f-67d85b329fbb">
+    <DataSourceViewID>Vifor Pharma Brand Management Dashboard</DataSourceViewID>
+  </Source>
+  <ErrorConfiguration dwd:design-time-name="319e9ca0-f337-4de0-92af-03eed6f5b1e1">
+    <KeyNotFound>ReportAndStop</KeyNotFound>
+    <KeyDuplicate>ReportAndStop</KeyDuplicate>
+    <NullKeyNotAllowed>ReportAndStop</NullKeyNotAllowed>
+  </ErrorConfiguration>
+  <CurrentStorageMode>Molap</CurrentStorageMode>
+  <Attributes>
+    <Attribute dwd:design-time-name="f2b8b343-089c-4252-9c8d-f347f212e8b8">
+      <ID>ID</ID>
+      <Name>ID</Name>
+      <Usage>Key</Usage>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="392029e8-082a-45c6-affa-86cb6d9a7d3d">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="3dd80676-bd11-429f-95df-3979b6ffae28">
+            <TableID>dbo_DIM_PERIOD</TableID>
+            <ColumnID>ID</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="84f35f45-a551-45ba-901c-846f69359cb9">
+          <AttributeID>MTH KEY</AttributeID>
+          <Name>Month</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="a86cc8e4-030c-4142-bfc8-be2d87c26a6c">
+          <AttributeID>RQT KEY</AttributeID>
+          <Name>Rolling Quarter</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="44d8bd2a-8030-4832-afd9-69a3b912707a">
+          <AttributeID>YTD KEY</AttributeID>
+          <Name>YTD</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="e080f378-ecce-4bc0-87e0-37a660577fd6">
+          <AttributeID>MAT KEY</AttributeID>
+          <Name>MAT</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="78443cb3-c140-444c-9983-ead8032b2969">
+          <AttributeID>Is Monthly</AttributeID>
+          <Name>IsMonthly</Name>
+        </AttributeRelationship>
+        <AttributeRelationship dwd:design-time-name="24bd022a-7b2c-4508-8e88-55e5a327110c">
+          <AttributeID>Is Quarterly</AttributeID>
+          <Name>IsQuarterly</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="2a06e758-f666-448a-be4f-96e85c341c2d">
+      <ID>MTH KEY</ID>
+      <Name>Month</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="9c92ad55-fc81-46df-9fe3-dfd34d2735de">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="b5089a2f-7b0b-4894-81c7-76c28894a854">
+            <TableID>dbo_DIM_PERIOD</TableID>
+            <ColumnID>MTH_KEY</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="313756f1-2f04-4b76-8c3b-60cb30480056">
+        <DataType>WChar</DataType>
+        <DataSize>200</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="ad58aaf1-78e4-4213-b8bf-29d430cb5c82">
+          <TableID>dbo_DIM_PERIOD</TableID>
+          <ColumnID>MTH_NAME</ColumnID>
+        </Source>
+      </NameColumn>
+      <AttributeRelationships>
+        <AttributeRelationship dwd:design-time-name="81dc1b0c-2d94-4803-95db-7ecbe1b86cc2">
+          <AttributeID>QTR KEY</AttributeID>
+          <Name>Quarter</Name>
+        </AttributeRelationship>
+      </AttributeRelationships>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="4d2d5f98-8748-4b37-ad50-5707755b51c7">
+      <ID>QTR KEY</ID>
+      <Name>Quarter</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="74e179be-5a87-43c0-8907-4351cc1b1c64">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="d4de6e93-d054-4620-9d39-6c6130baab10">
+            <TableID>dbo_DIM_PERIOD</TableID>
+            <ColumnID>QTR_KEY</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="c7b40461-bd59-46d3-8ebb-816e843ef3d2">
+        <DataType>WChar</DataType>
+        <DataSize>200</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="69aef15d-4eb8-40d6-8282-b43c1a5e4da7">
+          <TableID>dbo_DIM_PERIOD</TableID>
+          <ColumnID>QTR_NAME</ColumnID>
+        </Source>
+      </NameColumn>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="95d1ea18-9d39-44c6-af57-c8e22b34ac4f">
+      <ID>RQT KEY</ID>
+      <Name>Rolling Quarter</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="93c2441a-99cd-46ee-9f90-05de94ac01bd">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="9ebf1b00-fd37-45c6-9cdf-0ba444d13465">
+            <TableID>dbo_DIM_PERIOD</TableID>
+            <ColumnID>RQT_KEY</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="4e02ae71-dd2e-4f49-b3d6-e36864a452e7">
+        <DataType>WChar</DataType>
+        <DataSize>200</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="a1fb246a-cd4b-4736-9ab0-27d221182ac0">
+          <TableID>dbo_DIM_PERIOD</TableID>
+          <ColumnID>RQT_NAME</ColumnID>
+        </Source>
+      </NameColumn>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="0ad4ca10-df95-4810-976e-1b169f5fdb3b">
+      <ID>YTD KEY</ID>
+      <Name>YTD</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="c3171d4b-1f57-4470-bb67-03071cdcb5a3">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="179b4cb9-1de2-494d-9332-cae3b004e5ca">
+            <TableID>dbo_DIM_PERIOD</TableID>
+            <ColumnID>YTD_KEY</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="d61d28b3-794e-41f5-b33a-8f3b6f7f61bb">
+        <DataType>WChar</DataType>
+        <DataSize>200</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="afc1a1b2-8bd7-4e50-9813-b000731e5835">
+          <TableID>dbo_DIM_PERIOD</TableID>
+          <ColumnID>YTD_NAME</ColumnID>
+        </Source>
+      </NameColumn>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="5ae1d5bb-e9fd-493e-bf1f-853356bedb72">
+      <ID>MAT KEY</ID>
+      <Name>MAT</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="fca1de2c-e2d8-47a6-b211-688801b19029">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="da6a5b51-1afd-419c-84d9-7b588ff5f760">
+            <TableID>dbo_DIM_PERIOD</TableID>
+            <ColumnID>MAT_KEY</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <NameColumn dwd:design-time-name="4b059770-f357-4c94-92f2-751adf2c6c9d">
+        <DataType>WChar</DataType>
+        <DataSize>200</DataSize>
+        <Source xsi:type="ColumnBinding" dwd:design-time-name="32deeb5f-3b58-4aee-b7c2-e529f857c156">
+          <TableID>dbo_DIM_PERIOD</TableID>
+          <ColumnID>MAT_NAME</ColumnID>
+        </Source>
+      </NameColumn>
+      <OrderBy>Key</OrderBy>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="257dced1-9fab-4b6d-8603-5c8625e32868">
+      <ID>Is Monthly</ID>
+      <Name>IsMonthly</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="9bcdf08e-4714-4ce9-b75a-1171bee271d3">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="d3d99614-90c3-4000-8760-287eb573e052">
+            <TableID>dbo_DIM_PERIOD</TableID>
+            <ColumnID>IsMonthly</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+    <Attribute dwd:design-time-name="fdd871f5-1d9a-459f-9d2b-60890d658932">
+      <ID>Is Quarterly</ID>
+      <Name>IsQuarterly</Name>
+      <KeyColumns>
+        <KeyColumn dwd:design-time-name="a4c07f61-7bfc-4008-a6a3-6f84f1cdc01f">
+          <DataType>Integer</DataType>
+          <Source xsi:type="ColumnBinding" dwd:design-time-name="4f0b78b0-0b02-4ac6-99b6-53d1dea13465">
+            <TableID>dbo_DIM_PERIOD</TableID>
+            <ColumnID>IsQuarterly</ColumnID>
+          </Source>
+        </KeyColumn>
+      </KeyColumns>
+      <ddl200:ProcessingState>Unprocessed</ddl200:ProcessingState>
+    </Attribute>
+  </Attributes>
+</Dimension>

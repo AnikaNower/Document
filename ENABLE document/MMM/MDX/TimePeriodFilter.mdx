@@ -1,0 +1,57 @@
+//0||0
+//@datatype=rasel
+with
+
+member [Measures].[periodName] as
+	case when [DimPeriod].[Month].currentmember.name <> "All" then "MTH"
+	when [DimPeriod].[Quarter].currentmember.name <> "All" then "QTR"
+	when [DimPeriod].[YTD].currentmember.name <> "All" then "YTD"
+	else  "MAT" end
+
+member [Measures].[periodName1] as
+	case when [DimPeriod].[Month].currentmember.name <> "All" then "MTH"
+	when [DimPeriod].[Quarter].currentmember.name <> "All" then "QTR"
+	when [DimPeriod].[YTD].currentmember.name <> "All" then "YTD"
+	else  "MAT" end
+
+member [Measures].[periodValue] as
+	case when [DimPeriod].[Month].currentmember.name <> "All" then [DimPeriod].[Month].currentmember.UNIQUE_NAME
+	when [DimPeriod].[Quarter].currentmember.name <> "All" then [DimPeriod].[Quarter].currentmember.UNIQUE_NAME
+	when [DimPeriod].[YTD].currentmember.name <> "All" then [DimPeriod].[YTD].currentmember.UNIQUE_NAME
+	else  [DimPeriod].[MAT].currentmember.UNIQUE_NAME end
+
+select
+{
+[Measures].[periodName1],//Name1||0||||
+[Measures].[periodName],//Name||1||||
+[Measures].[periodValue]//Value||1||||
+} on columns,
+{
+	filter({(
+		tail(([DimPeriod].[Month].members,[DimPeriod].[IsMonthly].&[1]),1)(0)(0),
+		[DimPeriod].[Quarter].[All],
+		[DimPeriod].[YTD].[All],
+		[DimPeriod].[MAT].[All]
+	),
+	(
+		[DimPeriod].[Month].[All],
+		tail(([DimPeriod].[Quarter].members,[DimPeriod].[IsQuarterly].&[1]),1)(0)(0),
+		[DimPeriod].[YTD].[All],
+		[DimPeriod].[MAT].[All]
+	)},instr([Measures].[periodName1],"rasel")),
+	(
+		[DimPeriod].[Month].[All],
+		[DimPeriod].[Quarter].[All],
+		tail(([DimPeriod].[YTD].members,[DimPeriod].[IsMonthly].&[1]),1)(0)(0),
+		[DimPeriod].[MAT].[All]
+	),
+	(
+		[DimPeriod].[Month].[All],
+		[DimPeriod].[Quarter].[All],
+		[DimPeriod].[YTD].[All],
+		tail(([DimPeriod].[MAT].members,[DimPeriod].[IsMonthly].&[1]),1)(0)(0)
+	)
+	
+}//TimePeriod1||0||$$TimePeriod2||0||$$TimePeriod3||0||$$TimePeriod4||0||
+on rows
+from [MMMCube]

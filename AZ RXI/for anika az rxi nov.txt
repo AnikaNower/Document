@@ -1,0 +1,97 @@
+SELECT MKT, SUM(M3) AS [M3],SUM(M2) AS [M2] , SUM(M1) AS [M1] 
+FROM vw_AZ_Output_Final --az_group
+WHERE Fact='CNT.UNITS (A)' GROUP BY MKT ORDER BY MKT
+
+*****************
+
+SELECT PROD, SUM(M2) AS [M2],SUM(M1) AS [M1] 
+FROM AZ_GROUP_PREV 
+WHERE Fact='CNT.UNITS (A)' GROUP BY PROD ORDER BY PROD
+
+SELECT PROD, SUM(M3) AS [M3],SUM(M2) AS [M2]  --, SUM(M1) AS [M1] 
+FROM AZ_GROUP 
+WHERE Fact='CNT.UNITS (A)' GROUP BY PROD ORDER BY PROD
+
+--select top 2* from az_rxi_input
+
+SELECT PROD, SUM(M3) AS [M3],SUM(M2) AS [M2]  --, SUM(M1) AS [M1] 
+FROM az_rxi_input 
+WHERE Fact='CNT.UNITS (A)' GROUP BY PROD ORDER BY PROD
+
+-------------------------------------------
+
+select MKT,sum(Values03),sum(Values02),sum(Values01) 
+from vw_Dview_Output_Final --vw_AZ_Output_Final 
+group by MKT--PharbaseCode--PROD --MKT
+order by MKT--PharbaseCode--PROD --MKT
+-----------------------------------------------
+SELECT MKT, SUM(M3) AS [M3],SUM(M2) AS [M2] , SUM(M1) AS [M1] 
+FROM AZ_GROUP 
+WHERE Fact='VALUES (A)' and POST5 not in ('M31 2','ZZ99 1') 
+GROUP BY MKT ORDER BY MKT
+--------------------------
+
+select top 2* from az_group
+select top 2* from az_bridge
+
+---------------------------------------------
+(select distinct POST5 from az_group) not in
+(select distinct FullPOST5 from az_bridge)
+
+select * from az_bridge where not exists (select * from az_group where az_group.POST5=az_bridge.FullPOST5)
+
+----**************************************************************
+select MKT,sum(Values24),sum(Values23),sum(Values22),sum(Values21),sum(Values20),sum(Values19),
+sum(Values18),sum(Values17),sum(Values16),sum(Values15),sum(Values14),sum(Values13),sum(Values12),sum(Values11),sum(Values10),
+sum(Values09),sum(Values08),sum(Values07),sum(Values06),sum(Values05),sum(Values04),sum(Values03),sum(Values02),sum(Values01) 
+from vw_Dview_Output_Final --vw_AZ_Output_Final 
+group by MKT--PharbaseCode--PROD --MKT
+order by MKT--PharbaseCode--PROD --MKT
+-----------------------------------------------
+SELECT MKT,SUM(M24)AS [M24],SUM(M23)AS [M23],SUM(M22)AS [M22],SUM(M21)AS [M21],SUM(M20)AS [M20],SUM(M19)AS [M19],SUM(M18)AS [M18],
+SUM(M17)AS [M17],SUM(M16)AS [M16],SUM(M15)AS [M15],SUM(M14)AS [M14],SUM(M13)AS [M13],SUM(M12)AS [M12],SUM(M11)AS [M11],SUM(M10)AS [M10],
+SUM(M9)AS [M9],SUM(M8)AS [M8],SUM(M7)AS [M7],SUM(M6)AS [M6],SUM(M5)AS [M5],SUM(M4)AS [M4],SUM(M3)AS [M3],SUM(M2)AS [M2],SUM(M1)AS [M1] 
+FROM AZ_GROUP 
+WHERE Fact='VALUES (A)' and POST5 not in ('M31 2','ZZ99 1') 
+GROUP BY MKT ORDER BY MKT
+------------------------------------------------------
+SELECT MKT,SUM(M24)AS [M24],SUM(M23)AS [M23],SUM(M22)AS [M22],SUM(M21)AS [M21],SUM(M20)AS [M20],SUM(M19)AS [M19],SUM(M18)AS [M18],
+SUM(M17)AS [M17],SUM(M16)AS [M16],SUM(M15)AS [M15],SUM(M14)AS [M14],SUM(M13)AS [M13],SUM(M12)AS [M12],SUM(M11)AS [M11],SUM(M10)AS [M10],
+SUM(M9)AS [M9],SUM(M8)AS [M8],SUM(M7)AS [M7],SUM(M6)AS [M6],SUM(M5)AS [M5],SUM(M4)AS [M4],SUM(M3)AS [M3],SUM(M2)AS [M2],SUM(M1)AS [M1] 
+FROM AZ_GROUP 
+WHERE Fact='UNITS (A)' and POST5 not in ('M31 2','ZZ99 1') 
+GROUP BY MKT ORDER BY MKT
+----------------------------------------------------------------
+SELECT MKT,SUM(M24)AS [M24],SUM(M23)AS [M23],SUM(M22)AS [M22],SUM(M21)AS [M21],SUM(M20)AS [M20],SUM(M19)AS [M19],SUM(M18)AS [M18],
+SUM(M17)AS [M17],SUM(M16)AS [M16],SUM(M15)AS [M15],SUM(M14)AS [M14],SUM(M13)AS [M13],SUM(M12)AS [M12],SUM(M11)AS [M11],SUM(M10)AS [M10],
+SUM(M9)AS [M9],SUM(M8)AS [M8],SUM(M7)AS [M7],SUM(M6)AS [M6],SUM(M5)AS [M5],SUM(M4)AS [M4],SUM(M3)AS [M3],SUM(M2)AS [M2],SUM(M1)AS [M1] 
+FROM AZ_GROUP 
+WHERE Fact='CNT.UNITS (A)' and POST5 not in ('M31 2','ZZ99 1') 
+GROUP BY MKT ORDER BY MKT
+
+
+select top 2 * from vw_AZ_Output_Final
+SELECT MKT, SUM(M3) AS [M3],SUM(M2) AS [M2] , SUM(M1) AS [M1] 
+FROM vw_AZ_Output_Final --az_group
+WHERE Fact='CNT.UNITS (A)' GROUP BY MKT ORDER BY MKT
+---------------------------------------------------------------------********
+SELECT MKT,SUM(M24),SUM(M23),SUM(M22),SUM(M21),SUM(M20),SUM(M19),SUM(M18),SUM(M17),SUM(M16),
+SUM(M15),SUM(M14),SUM(M13),SUM(M12),SUM(M11),SUM(M10),SUM(M9),SUM(M8),SUM(M7),
+SUM(M6),SUM(M5),SUM(M4),SUM(M3),SUM(M2),SUM(M1)
+FROM AZ_GROUP 
+WHERE Fact='VALUES (A)' and POST5 not in ('M31 2','ZZ99 1') 
+GROUP BY MKT ORDER BY MKT
+SELECT MKT,SUM(M24),SUM(M23),SUM(M22),SUM(M21),SUM(M20),SUM(M19),SUM(M18),SUM(M17),SUM(M16),
+SUM(M15),SUM(M14),SUM(M13),SUM(M12),SUM(M11),SUM(M10),SUM(M9),SUM(M8),SUM(M7),
+SUM(M6),SUM(M5),SUM(M4),SUM(M3),SUM(M2),SUM(M1)
+FROM AZ_GROUP 
+WHERE Fact='UNITS (A)' and POST5 not in ('M31 2','ZZ99 1') 
+GROUP BY MKT ORDER BY MKT
+SELECT MKT,SUM(M24),SUM(M23),SUM(M22),SUM(M21),SUM(M20),SUM(M19),SUM(M18),SUM(M17),SUM(M16),
+SUM(M15),SUM(M14),SUM(M13),SUM(M12),SUM(M11),SUM(M10),SUM(M9),SUM(M8),SUM(M7),
+SUM(M6),SUM(M5),SUM(M4),SUM(M3),SUM(M2),SUM(M1)
+FROM AZ_GROUP 
+WHERE Fact='CNT.UNITS (A)' and POST5 not in ('M31 2','ZZ99 1') 
+GROUP BY MKT ORDER BY MKT
+
+

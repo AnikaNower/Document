@@ -1,0 +1,205 @@
+//0||0
+//@country=[DimGeoView].[HGeo].[All]
+//@franchise=[DimFranchiseBrand].[FranchiseGroup].[All]
+//@period=[DimPeriod].[Month].&[201107]
+//@measure=[DimMeasureNames].[Name].&[LCUSD]
+//@datatype=MTH
+//@brand=[DimFranchiseBrand].[HFranchiseBrand].[BrandGroup].&[1428]
+//@showAll=NO
+with
+
+member [DimFranchiseBrand].[GroupType].[slice] as
+	case when [DimFranchiseBrand].[HFranchiseBrand].[BrandGroup].&[1428] is [DimFranchiseBrand].[GroupType].&[1] then
+			[DimFranchiseBrand].[GroupType].&[1]
+		else [DimFranchiseBrand].[GroupType].[All] end
+
+set FullProductSet as
+	case when [DimFranchiseBrand].[HFranchiseBrand].[BrandGroup].&[1428] is [DimFranchiseBrand].[GroupType].&[1] then
+			[DimFranchiseBrand].[HFranchiseBrand].[BrandGroup].members
+		when [DimFranchiseBrand].[HFranchiseBrand].[BrandGroup].&[1428] is [DimFranchiseBrand].[GroupType].[All] then
+			[DimFranchiseBrand].[HFranchiseBrand].[BrandGroup].members
+		else 
+			case when [DimFranchiseBrand].[HFranchiseBrand].[BrandGroup].&[1428].level.ordinal = 5
+			then descendants(
+				ancestor([DimFranchiseBrand].[HFranchiseBrand].[BrandGroup].&[1428],[DimFranchiseBrand].[HFranchiseBrand].[Market])
+				,[DimFranchiseBrand].[HFranchiseBrand].[BrandGroup]) + [DimFranchiseBrand].[HFranchiseBrand].[BrandGroup].&[1428]
+			else
+				descendants(
+				ancestor([DimFranchiseBrand].[HFranchiseBrand].[BrandGroup].&[1428],[DimFranchiseBrand].[HFranchiseBrand].[Market])
+				,[DimFranchiseBrand].[HFranchiseBrand].[Brand]) + [DimFranchiseBrand].[HFranchiseBrand].[BrandGroup].&[1428]
+			end
+		end
+
+set AllNovarticsBrands as
+	filter({
+		nonempty(
+			(FullProductSet,
+			[DimFranchiseBrand].[TypeOfBrands].[TypeOfBrands].members,
+			[DimChannel].[TypeOfBrands].[TypeOfBrands].members,
+			[DimFranchiseBrand].[GroupType].[slice])
+			,[Measures].[LatestSales]
+		)
+		},
+		[DimFranchiseBrand].[TypeOfBrands].currentmember.properties("caption")
+			=[DimChannel].[TypeOfBrands].currentmember.properties("caption")
+	)
+
+set Top8count as
+	nonempty(
+		topcount(AllNovarticsBrands,9,[Measures].[LatestSales])
+	,[Measures].[LatestSales])
+
+set OneNovartisBrand as
+	case when [DimFranchiseBrand].[HFranchiseBrand].[BrandGroup].&[1428] is [DimFranchiseBrand].[GroupType].&[1] then
+		null
+	when [DimFranchiseBrand].[HFranchiseBrand].[BrandGroup].&[1428] is [DimFranchiseBrand].[GroupType].[All] then
+		topcount(
+			(FullProductSet,
+			[DimFranchiseBrand].[TypeOfBrands].&[Novartis],
+			[DimChannel].[TypeOfBrands].&[Novartis],
+			[DimFranchiseBrand].[GroupType].[slice]
+			)
+			,1,[Measures].[LatestSales])
+	else 
+		([DimFranchiseBrand].[HFranchiseBrand].[BrandGroup].&[1428],
+			[DimFranchiseBrand].[TypeOfBrands].&[Novartis],
+			[DimChannel].[TypeOfBrands].&[Novartis],
+			[DimFranchiseBrand].[GroupType].[slice]
+		)
+	end
+
+
+set TopBrands as
+	IIF(count(union(Top8count,OneNovartisBrand)) <= 9,
+		order(Top8count + OneNovartisBrand,[Measures].[LatestSales],bdesc),
+		topcount(Top8count,8,[Measures].[LatestSales]) + OneNovartisBrand
+		)
+
+set NovartisCometitors as
+	order(
+		nonempty(except(
+			(FullProductSet,
+			[DimFranchiseBrand].[TypeOfBrands].[TypeOfBrands].members,
+			[DimChannel].[TypeOfBrands].&[Competitor],
+			[DimFranchiseBrand].[GroupType].[slice])
+			,TopBrands)
+		,[Measures].[Data])
+	,[Measures].[LatestSales],bdesc)
+
+set NovartisOtherBrands as
+	order(
+		nonempty(except(
+			(FullProductSet,
+				[DimFranchiseBrand].[TypeOfBrands].[TypeOfBrands].members,
+				[DimChannel].[TypeOfBrands].&[Novartis],
+				[DimFranchiseBrand].[GroupType].[slice])
+			,TopBrands) 
+		,[Measures].[Data])
+	,[Measures].[LatestSales],bdesc)
+
+member [DimFranchiseBrand].[HFranchiseBrand].[NovartisCompetitorSum] as
+	IIF(isempty(sum(NovartisCometitors,[Measures].[Data])),0,sum(NovartisCometitors,[Measures].[Data]))
+
+member [DimFranchiseBrand].[HFranchiseBrand].[NovartisOtherSum] as
+	iif(isempty(sum(NovartisOtherBrands,[Measures].[Data])),0,sum(NovartisOtherBrands,[Measures].[Data]))
+
+member [DimFranchiseBrand].[HFranchiseBrand].[TotalSales] as
+	iif(isempty(sum(TopBrands,[Measures].[Data])),0,sum(TopBrands,[Measures].[Data]))
+		+ [DimFranchiseBrand].[HFranchiseBrand].[NovartisCompetitorSum]
+		+ [DimFranchiseBrand].[HFranchiseBrand].[NovartisOtherSum]
+
+
+member [Measures].[Display Name] as
+	iif([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "NovartisOtherSum", "Others (Novartis)",
+		IIF([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "NovartisCompetitorSum",
+			"Others (Competitors)",
+				IIF([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "TotalSales",
+				"Total Sum",
+			[DimFranchiseBrand].[HFranchiseBrand].currentmember.name))
+	)
+
+member [Measures].[itemCount] as
+	count(lastperiods(12,[DimPeriod].[Month].&[201107]))
+
+member [Measures].[LatestSales] as
+	sum(([Measures].[Data],[DimPeriod].[Month].&[201107]))
+
+
+member [Measures].[isNovartis] as 
+	case when [DimFranchiseBrand].[TypeOfBrands].currentmember.properties("caption") = "Novartis" then 
+		1 
+	else 0
+	end
+	
+member [Measures].[Sales (in m)] as
+IIF(isempty([Measures].[Data]),0,[Measures].[Data]), format_string = '0.########'
+
+member [Measures].[Level] as
+	[DimLevel].[Num].currentmember.name
+
+select 
+{
+	([Measures].[Level],lastperiods(1,[DimPeriod].[Month].&[201107])),	//Level||1||||Level
+	([Measures].[isNovartis],lastperiods(1,[DimPeriod].[Month].&[201107])),	//{0}||1||||isNovartis
+	([Measures].[Display Name],lastperiods(1,[DimPeriod].[Month].&[201107])),	//Brand||1||||
+	([Measures].[Sales (in m)],lastperiods(12,[DimPeriod].[Month].&[201107]))//{1}||1||[Measures].[itemCount]||
+} on columns,
+{
+	case when [DimFranchiseBrand].[FranchiseGroup].[All] is [DimFranchiseBrand].[FranchiseGroup].&[IAG_EM] then
+	null
+	else
+	{
+		IIF([DimFranchiseBrand].[HFranchiseBrand].[TotalSales] <> 0,
+			([DimFranchiseBrand].[HFranchiseBrand].[TotalSales],
+			[DimFranchiseBrand].[TypeOfBrands].[All],
+			[DimChannel].[TypeOfBrands].[All],
+			[DimFranchiseBrand].[GroupType].[slice],
+			[DimLevel].[Num].&[1])
+			,null),
+		
+		(TopBrands,[DimLevel].[Num].&[2]),
+		
+		IIF("NO"="YES", 
+			null,
+			IIF([DimFranchiseBrand].[HFranchiseBrand].[NovartisOtherSum]<> 0,
+				([DimFranchiseBrand].[HFranchiseBrand].[NovartisOtherSum],
+				[DimFranchiseBrand].[TypeOfBrands].[All],
+				[DimChannel].[TypeOfBrands].[All],
+				[DimFranchiseBrand].[GroupType].[slice],
+				[DimLevel].[Num].&[3])
+				,null)
+		),
+		
+		IIF("NO"="YES",
+			(
+				order({NovartisOtherBrands+NovartisCometitors},[Measures].[LatestSales],bdesc)
+				,[DimLevel].[Num].&[4]),
+			null
+		),
+		
+		IIF("NO"="YES", 
+			null,
+			IIF([DimFranchiseBrand].[HFranchiseBrand].[NovartisCompetitorSum]<>0,
+				([DimFranchiseBrand].[HFranchiseBrand].[NovartisCompetitorSum],
+				[DimFranchiseBrand].[TypeOfBrands].[All],
+				[DimChannel].[TypeOfBrands].[All],
+				[DimFranchiseBrand].[GroupType].[slice],
+				[DimLevel].[Num].&[3])
+				,null)
+		)
+	}end
+}//selection3||0||$$selection2||0||$$selection1||0||$$selection||0||$$level||0||
+on rows
+from 
+// begin subcube
+(
+	select 
+		{[DimGeoView].[HGeo].[All]} on 0
+	from [MMMCube]
+)
+//end subcube
+where (
+		[DimMeasureNames].[Name].&[LCUSD],
+		[DimDataSource].[Source].&[MTH],
+		[DimFranchiseBrand].[FranchiseGroup].[All]
+	)	

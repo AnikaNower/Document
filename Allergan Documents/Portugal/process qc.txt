@@ -1,0 +1,15 @@
+open output.csv file and qc file with textpad
+
+open product pack checking and update document and copy no.2 er pack/product er table name to server query file.
+
+open local sql, goto database, cubes, select the cube then browse
+
+period theke current period select kore upore dibo.
+geo puratai  upore dibo.
+product puratai side e dibo thn upore dibo
+measure theke UN and val nibo thn nice dibo.
+
+
+run 
+
+select * from PRODUCT_CODE_Allergan_Portugal where prod_Code_ID='G00000500'

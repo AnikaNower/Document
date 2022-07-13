@@ -1,0 +1,13 @@
+--truncate table dbo.IMP_CEGEDIM
+
+select * from dbo.IMP_CEGEDIM
+--------For insert-----------------------
+insert  into  dbo.IMP_CEGEDIM select * from 
+dbo.IMP_CEGEDIM_AtuDec_detailback
+-----------------------------------------------
+delete from dbo.IMP_CEGEDIM where [KPI ID] is null
+
+
+--------------------------For backup------------
+--select * into dbo.IMP_CEGEDIM_AtuDec_shortback
+--from dbo.IMP_CEGEDIM

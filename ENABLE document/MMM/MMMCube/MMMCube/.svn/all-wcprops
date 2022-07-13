@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/Novartis_MMM_Dashboard/!svn/ver/189/02%20-%20Development/Database/MMMCube
+END
+MMMCube.partitions
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/Novartis_MMM_Dashboard/!svn/ver/57/02%20-%20Development/Database/MMMCube/MMMCube.partitions
+END
+DimPeriod.dim
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/Novartis_MMM_Dashboard/!svn/ver/57/02%20-%20Development/Database/MMMCube/DimPeriod.dim
+END
+DimKPI.dim
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/Novartis_MMM_Dashboard/!svn/ver/47/02%20-%20Development/Database/MMMCube/DimKPI.dim
+END
+DimPeriodToFact.dim
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/Novartis_MMM_Dashboard/!svn/ver/47/02%20-%20Development/Database/MMMCube/DimPeriodToFact.dim
+END
+DimPeriodType.dim
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/Novartis_MMM_Dashboard/!svn/ver/47/02%20-%20Development/Database/MMMCube/DimPeriodType.dim
+END
+DimMeasureNames.dim
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/Novartis_MMM_Dashboard/!svn/ver/47/02%20-%20Development/Database/MMMCube/DimMeasureNames.dim
+END
+MMM Data Source View.dsv
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/Novartis_MMM_Dashboard/!svn/ver/189/02%20-%20Development/Database/MMMCube/MMM%20Data%20Source%20View.dsv
+END
+MMMCube.database
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/Novartis_MMM_Dashboard/!svn/ver/47/02%20-%20Development/Database/MMMCube/MMMCube.database
+END
+MMMCube.dwproj
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/Novartis_MMM_Dashboard/!svn/ver/140/02%20-%20Development/Database/MMMCube/MMMCube.dwproj
+END
+DimDataSource.dim
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/Novartis_MMM_Dashboard/!svn/ver/141/02%20-%20Development/Database/MMMCube/DimDataSource.dim
+END
+DimCorporation.dim
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/Novartis_MMM_Dashboard/!svn/ver/154/02%20-%20Development/Database/MMMCube/DimCorporation.dim
+END
+MMMCube.cube
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/Novartis_MMM_Dashboard/!svn/ver/189/02%20-%20Development/Database/MMMCube/MMMCube.cube
+END
+MMM Data Source.ds
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/Novartis_MMM_Dashboard/!svn/ver/140/02%20-%20Development/Database/MMMCube/MMM%20Data%20Source.ds
+END
+MMMCube.dwproj.user
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/Novartis_MMM_Dashboard/!svn/ver/184/02%20-%20Development/Database/MMMCube/MMMCube.dwproj.user
+END
+DimGeoView.dim
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/Novartis_MMM_Dashboard/!svn/ver/140/02%20-%20Development/Database/MMMCube/DimGeoView.dim
+END
+DimLevel.dim
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/Novartis_MMM_Dashboard/!svn/ver/47/02%20-%20Development/Database/MMMCube/DimLevel.dim
+END
+DimChannel.dim
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/Novartis_MMM_Dashboard/!svn/ver/184/02%20-%20Development/Database/MMMCube/DimChannel.dim
+END
+DimFranchiseBrand.dim
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/svn/Novartis_MMM_Dashboard/!svn/ver/189/02%20-%20Development/Database/MMMCube/DimFranchiseBrand.dim
+END
+DimGeo.dim
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/Novartis_MMM_Dashboard/!svn/ver/47/02%20-%20Development/Database/MMMCube/DimGeo.dim
+END

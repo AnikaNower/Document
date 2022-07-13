@@ -1,0 +1,74 @@
+input :
+
+Location: ftp://ftp-emea.rxcorp.com/Level3_Global_Analysis/Internal/
+
+Database name: RVPLUS_Combined_Q213.zip
+Username: D08044
+Password: CHProd
+------------------------------
+File name	: RVPLUS_Combined_Q212.zip
+PRM 		: DBrvplus.PRM
+
+convert with convert 50.
+> 1. MAT delete
+> 2. CTY.DLL delete
+> 3. Unpivoted [ export header + norms periods ]
+
+Login to Database:
+	DB location	: 10.223.200.39\SQL2K8R2
+	user name / pass: GSK_OTC / GSK_OTC
+	Database name	: GSK_OTC_CUBE_DB_DEV
+
+Run below query
+
+TRUNCATE table dbo.UNPIVOTED_IMS_RAW_CTY_ALL_COUNTRY_DATA_BK
+
+INSERT INTO UNPIVOTED_IMS_RAW_CTY_ALL_COUNTRY_DATA_BK
+SELECT * from UNPIVOTED_IMS_RAW_CTY_ALL_COUNTRY_DATA
+
+TRUNCATE table dbo.UNPIVOTED_IMS_RAW_CTY_ALL_COUNTRY_DATA
+
+
+
+
+Then import 'DBrvplus.OUT' to >
+
+	Table name	: UNPIVOTED_IMS_RAW_CTY_ALL_COUNTRY_DATA
+
+
+CTY - > PERIOD 	: Unicode string [DT_WSTR] (50)
+MEASURES	: decimal > 18,6 except LC and LEU
+
+mapping > OTC3 = CATS
+
+
+IMPORT DONE!
+
+run below Query
+exec LOAD_CUBE_DATA_WRAPPER
+
+
+Login to Server 10.223.200.39
+
+OPen SQL Server Management Studio - Select Analysis Service (10.223.200.39\SQL2K8R2)
+
+Select Database GSK_OTC_CUBE_2 - Right Click - Process - OK
+
+DEV site : http://10.223.200.22/GSK_OTC/Login/Login.aspx
+after confirmation >
+
+
+Take backup of 'GSK_OTC_CUBE_2'
+
+transfer this to GDC.
+Location	: 162.44.25.28
+
+take backup 'GSK_OTC_CUBE_2' to 'D:\GSK_OTC\GSK_OTC'
+restore cube to 'GSK_OTC_CUBE_2' from your transferred zip file
+
+
+http://custemea3.imshealth.com/GSK_OTC_DASHBOARD
+
+
+
+

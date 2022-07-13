@@ -1,0 +1,14 @@
+
+
+select * from ClientLine
+select * from ClientLine_prev
+
+select distinct new.Product_Code, new.Short_Desc,old.Product_Code, old.Short_Desc
+from ClientLine new, ClientLine_prev old
+where new.Short_Desc = old.Short_Desc
+
+update ClientLine
+set
+ClientLine.Product_Code = ClientLine_prev.Product_Code
+from ClientLine_prev
+where ClientLine.Short_Desc = ClientLine_prev.Short_Desc

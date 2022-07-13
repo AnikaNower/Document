@@ -1,0 +1,85 @@
+
+
+select * into #temp1 from ALLERGAN_UK_HSA_ALG07_DATA_OUTPUT
+where product not in ('1','3','4','6','13','21','31')
+
+insert into #temp1
+SELECT [Country]
+      ,[Area]
+      ,[Territory]
+      ,[SubLevel]
+      ,[HOSPITAL]
+      ,[HPL_Code]
+      ,[Dept]
+      ,[InOutPatient]
+      ,[Brick]
+      ,[ATC]
+      ,'UNBRANDED' as Manufacturer
+      ,'13' as Product
+      ,[SKU]
+      ,[RecordType]	
+      ,SUM(CAST([P1] as DECIMAL(18,3)))
+      ,SUM(CAST([P2] as DECIMAL(18,3)))
+      ,SUM(CAST([P3] as DECIMAL(18,3)))
+      ,SUM(CAST([P4] as DECIMAL(18,3)))
+      ,SUM(CAST([P5] as DECIMAL(18,3)))
+      ,SUM(CAST([P6] as DECIMAL(18,3)))
+      ,SUM(CAST([P7] as DECIMAL(18,3)))
+      ,SUM(CAST([P8] as DECIMAL(18,3)))
+      ,SUM(CAST([P9] as DECIMAL(18,3)))
+      ,SUM(CAST([P10] as DECIMAL(18,3)))
+      ,SUM(CAST([P11] as DECIMAL(18,3)))
+      ,SUM(CAST([P12] as DECIMAL(18,3)))
+      ,SUM(CAST([P13] as DECIMAL(18,3)))
+      ,SUM(CAST([P14] as DECIMAL(18,3)))
+      ,SUM(CAST([P15] as DECIMAL(18,3)))
+      ,SUM(CAST([P16] as DECIMAL(18,3)))
+      ,SUM(CAST([P17] as DECIMAL(18,3)))
+      ,SUM(CAST([P18] as DECIMAL(18,3)))
+      ,SUM(CAST([P19] as DECIMAL(18,3)))
+      ,SUM(CAST([P20] as DECIMAL(18,3)))
+      ,SUM(CAST([P21] as DECIMAL(18,3)))
+      ,SUM(CAST([P22] as DECIMAL(18,3)))
+      ,SUM(CAST([P23] as DECIMAL(18,3)))
+      ,SUM(CAST([P24] as DECIMAL(18,3)))
+  FROM [Allergan].[dbo].[ALLERGAN_UK_HSA_ALG07_DATA_OUTPUT]
+where product in ('1','3','4','6','13','21','31')
+group by [Country]
+      ,[Area]
+      ,[Territory]
+      ,[SubLevel]
+      ,[HOSPITAL]
+      ,[HPL_Code]
+      ,[Dept]
+      ,[InOutPatient]
+      ,[Brick]
+      ,[ATC]
+      ,[Manufacturer]
+	  , product
+      ,[SKU]
+      ,[RecordType]
+
+
+
+truncate table ALLERGAN_UK_HSA_ALG07_DATA_OUTPUT
+
+insert into ALLERGAN_UK_HSA_ALG07_DATA_OUTPUT
+select * from #temp1 where country = 'Country'
+
+insert into ALLERGAN_UK_HSA_ALG07_DATA_OUTPUT
+select * from #temp1 where country <> 'Country'
+order by 
+[Country]
+      ,[Area]
+      ,[Territory]
+      ,[SubLevel]
+      ,[HOSPITAL]
+      ,[HPL_Code]
+      ,[Dept]
+      ,[InOutPatient]
+      ,[Brick]
+      ,[ATC]
+      ,[Manufacturer]
+	  , product
+      ,[SKU]
+      ,[RecordType]

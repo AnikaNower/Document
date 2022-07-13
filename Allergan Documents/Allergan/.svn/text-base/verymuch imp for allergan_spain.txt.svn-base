@@ -1,0 +1,350 @@
+  
+CREATE Procedure [dbo].[usp_Allergan_Generate_TERRITORY_LEVEL_STAGING_CASH](@P1 Varchar(20),@P2 Varchar(20),    
+@P3 Varchar(20),@P4 Varchar(20),    
+@P5 Varchar(20),@P6 Varchar(20),     
+@P7 Varchar(20),@P8 Varchar(20),     
+@P9 Varchar(20),@P10 Varchar(20),     
+@P11 Varchar(20),@P12 Varchar(20),    
+@P13 Varchar(20),@P14 Varchar(20),    
+@P15 Varchar(20),@P16 Varchar(20),     
+@P17 Varchar(20),@P18 Varchar(20),     
+@P19 Varchar(20),@P20 Varchar(20),     
+@P21 Varchar(20),@P22 Varchar(20),     
+@P23 Varchar(20),@P24 Varchar(20))    
+AS    
+    
+BEGIN TRY    
+    
+Insert INTO ALLERGAN_TRANSPOSE_STAGING(Country,Area,Territory,SubLevel,Hospital,HPL_Code,Dept,InOutPatient,    
+Brick,ATC,Manufacturer,Product,SKU,RecordType,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,    
+P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23,p24)    
+select DISTINCT t0.Country,t0.Area,t0.Territory,t0.SubLevel,t0.HOSPITAL,t0.HPL_Code,t0.Dept,t0.InOutPatient,    
+ t0.Brick,t0.ATC,t0.Manufacturer,t0.Product,t0.SKU,'VALUES' as RecordType,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where     
+    t1.PROD_CODE = t0.PROD_CODE and    
+    t1.Brick = t0.Brick and     
+    t1.period = @P1    
+ ) P1,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P2    
+ ) P2,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P3    
+ ) P3,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P4    
+ ) P4,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P5    
+ ) P5,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P6    
+ ) P6,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P7    
+ ) P7,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P8    
+ ) P8,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P9    
+ ) P9,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P10    
+ ) P10,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P11    
+ ) P11,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P12    
+ ) P12,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P13    
+ ) P13,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P14    
+ ) P14,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P15    
+ ) P15,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P16    
+ ) P16,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P17    
+ ) P17,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P18    
+ ) P18,     (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P19    
+ ) P19,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P20    
+ ) P20,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P21    
+ ) P21,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P22    
+ ) P22,    
+ (    
+ Select t1.CASH from  ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P23    
+ ) P23,    
+ (    
+ Select t1.CASH from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P24    
+ ) P24    
+FROM  ALLERGAN_TRANSPOSE_STAGE_0 t0    
+    
+END TRY    
+    
+BEGIN CATCH    
+ EXEC usp_RethrowError;    
+END CATCH
+
+----------------------------------------------------
+
+
+Alter Procedure [dbo].[usp_Allergan_Generate_TERRITORY_LEVEL_STAGING_UNIT](@P1 Varchar(20),@P2 Varchar(20),    
+@P3 Varchar(20),@P4 Varchar(20),    
+@P5 Varchar(20),@P6 Varchar(20),     
+@P7 Varchar(20),@P8 Varchar(20),     
+@P9 Varchar(20),@P10 Varchar(20),     
+@P11 Varchar(20),@P12 Varchar(20),    
+@P13 Varchar(20),@P14 Varchar(20),    
+@P15 Varchar(20),@P16 Varchar(20),     
+@P17 Varchar(20),@P18 Varchar(20),     
+@P19 Varchar(20),@P20 Varchar(20),     
+@P21 Varchar(20),@P22 Varchar(20),     
+@P23 Varchar(20),@P24 Varchar(20))    
+AS    
+    
+BEGIN TRY    
+    
+Insert INTO ALLERGAN_TRANSPOSE_STAGING(Country,Area,Territory,SubLevel,Hospital,HPL_Code,Dept,InOutPatient,    
+Brick,ATC,Manufacturer,Product,SKU,RecordType,P1,P2,P3,P4,P5,P6,P7,P8,P9,P10,P11,P12,    
+P13,P14,P15,P16,P17,P18,P19,P20,P21,P22,P23,p24)    
+select DISTINCT t0.Country,t0.Area,t0.Territory,t0.SubLevel,t0.HOSPITAL,t0.HPL_Code,t0.Dept,t0.InOutPatient,    
+ t0.Brick,t0.ATC,t0.Manufacturer,t0.Product,t0.SKU,'UNITS' as RecordType,    
+ --P1    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P1    
+ ) P1,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P2    
+ ) P2,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P3    
+ ) P3,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P4    
+ ) P4,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P5    
+ ) P5,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P6    
+ ) P6,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P7    
+ ) P7,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P8    
+ ) P8,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P9    
+ ) P9,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P10    
+ ) P10,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P11    
+ ) P11,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P12    
+ ) P12,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P13    
+ ) P13,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P14    
+ ) P14,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P15    
+ ) P15,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P16    
+ ) P16,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P17    
+ ) P17,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P18    
+ ) P18,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P19    
+ ) P19,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P20    
+ ) P20,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P21    
+ ) P21,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P22    
+ ) P22,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P23    
+ ) P23,    
+ (    
+ Select t1.UNIT from ALLERGAN_TRANSPOSE_STAGE_0 t1    
+  where t1.PROD_CODE = t0.PROD_CODE and    
+  t1.Brick = t0.Brick and     
+  t1.period = @P24    
+ ) P24    
+FROM ALLERGAN_TRANSPOSE_STAGE_0 t0    
+    
+END TRY    
+    
+BEGIN CATCH    
+ EXEC usp_RethrowError;    
+END CATCH 

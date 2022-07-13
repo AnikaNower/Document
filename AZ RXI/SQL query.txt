@@ -1,0 +1,5 @@
+-------for missing bricks product----
+SELECT PROD,SUM(M24)AS [M24],SUM(M23)AS [M23],SUM(M22)AS [M22] 
+FROM AZ_GROUP 
+WHERE Fact='VALUES (A)' and POST5 not in ('M31 2','ZZ99 1') 
+GROUP BY PROD ORDER BY PROD

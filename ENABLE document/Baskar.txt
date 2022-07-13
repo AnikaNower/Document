@@ -1,0 +1,10 @@
+Ghodge, Bhaskar (Basel) [3:24 PM]:
+1. ON TEST System - can you trigger job to retrive the exchange rate?
+Ghodge, Bhaskar (Basel) [3:25 PM]:
+2. If all the panels are available for October 2012 release, then can you please start November 2012 release?
+Ghodge, Bhaskar (Basel) [3:44 PM]:
+Composite operating system has been changed to Windows 8 
+Ghodge, Bhaskar (Basel) [3:44 PM]:
+On test system: we will need to execute exchange rate retrival job and then trigger monthly load on Test 
+Ghodge, Bhaskar (Basel) [3:45 PM]:
+is there any one who could execute these two jobs?

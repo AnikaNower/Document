@@ -1,0 +1,152 @@
+//0||0
+//@region=[DimGeoView].[HGeo].[SubSubRegion].&[09_SSR09]
+//@country=[DimGeoView].[HGeo].[Country].&[653]
+//@franchise=[DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM]
+//@period=[DimPeriod].[Month].&[201009]
+//@measure=[DimMeasureNames].[Name].&[LCUSD]
+//@datatype=MTH
+//@brand=[DimFranchiseBrand].[GroupType].&[0]
+with
+
+member [Measures].[Lag] as
+	iif(instr(membertostr([DimPeriod].[Month].&[201009]),"Quarter") > 0,4,12)
+
+member [Measures].[slice] as
+	case when [DimFranchiseBrand].[GroupType].&[0] is [DimFranchiseBrand].[GroupType].&[1] then
+		"[DimFranchiseBrand].[GroupType].[All]"
+		when [DimFranchiseBrand].[GroupType].&[0] is [DimFranchiseBrand].[GroupType].[All] then
+		"[DimFranchiseBrand].[GroupType].[All]"
+	else "linkmember(ancestor([DimFranchiseBrand].[GroupType].&[0],
+		[DimFranchiseBrand].[HFranchiseBrand].[Market]),[DimFranchiseBrand].[Market])" end
+
+set AllNovarticsBrands as
+	case when [DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM] is [DimFranchiseBrand].[FranchiseGroup].[All] then
+		nonempty(existing [DimFranchiseBrand].[HFranchiseBrand].[FranchiseGroup].members,[Measures].[Data])
+		when [DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM] is [DimFranchiseBrand].[FranchiseGroup].&[IAG_EM] then
+		null
+	else
+		linkmember([DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM],[DimFranchiseBrand].[HFranchiseBrand])
+	end
+
+set TopBrands as
+	nonempty(
+		topcount({AllNovarticsBrands},9,[Measures].[Data])
+	,[Measures].[Data])
+
+member [DimFranchiseBrand].[HFranchiseBrand].[NovartisOtherSum] as
+	sum(except(AllNovarticsBrands,TopBrands),[Measures].[Data])
+
+member [Measures].[Display Name] as
+	iif([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "NovartisOtherSum", "Other Novartis Brands",
+		IIF([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "NovartisCompetitorSum",
+			"Other Competitors Brands",
+				IIF([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "All",
+				"Total Sum",
+			[DimFranchiseBrand].[HFranchiseBrand].currentmember.name))
+	)
+
+member [Measures].[Sales (in m)] as
+	IIF(isempty([Measures].[Data]),0,[Measures].[Data]), format_string = '0.########'
+
+member [Measures].[ParentSales] as
+	IIF([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "All",
+		null,
+		(
+		[DimFranchiseBrand].[HFranchiseBrand].currentmember,
+		[DimFranchiseBrand].[TypeOfBrands].[All],
+		[DimChannel].[TypeOfBrands].[All],
+		strtomember([Measures].[slice]),
+		[Measures].[Data]
+		)
+	)
+
+member [Measures].[PrevYearSales] as
+	([Measures].[Data],[DimPeriod].[Month].&[201009].lag([Measures].[Lag]))
+
+member [Measures].[Growth vs PY] as
+IIF ([Measures].[Data]  and [Measures].[PrevYearSales] <> 0, 
+	([Measures].[Data] - [Measures].[PrevYearSales] ) 
+	/ ([Measures].[PrevYearSales]) * 100,"-"), format_string = '0.########'
+
+member [Measures].[Market share] as
+	case when [DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "All" then
+	null
+	else
+	IIF([Measures].[ParentSales] and [Measures].[Data] <> 0, 
+	([Measures].[Data]/[Measures].[ParentSales])*100, "-")
+	end, format_string = '0.########'
+
+member [Measures].[Prev Market share] as
+	IIF([Measures].[Market share] = "-",
+		"-",([Measures].[Market share],[DimPeriod].[Month].&[201009].lag([Measures].[Lag])))
+
+member [Measures].[D vs PY] as
+IIF ([Measures].[Market share] <> "-" and [Measures].[Prev Market share] <> "-", 
+	([Measures].[Market share] - [Measures].[Prev Market share] ) ,"-"), format_string = '0.########'
+
+member [Measures].[Market Growth] as
+	case when [DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "All" then
+	null
+	else
+	(
+	[DimFranchiseBrand].[HFranchiseBrand].currentmember,
+	[DimFranchiseBrand].[TypeOfBrands].[All],
+	[DimChannel].[TypeOfBrands].[All],
+	strtomember([Measures].[slice]),
+	[Measures].[Growth vs PY])
+	end
+
+member [Measures].[Evol. Index] as
+	case when [DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "All" then
+	null
+	else
+		case when [Measures].[Growth vs PY] = "-" or [Measures].[Market Growth] = "-"
+		then "-"
+		else (1 + [Measures].[Growth vs PY]/100) / (1 + [Measures].[Market Growth]/100)*100 end
+	end, format_string = '0.########'
+
+member [Measures].[Level] as
+[DimLevel].[Num].currentmember.name
+
+select 
+{
+	[Measures].[Level],			//Level||1||||Level
+	[Measures].[Display Name],	//Franchise||1||||
+	[Measures].[Sales (in m)],	//Sales (in m)||1||||
+	[Measures].[Growth vs PY],	//Growth vs PY||1||||
+	[Measures].[Market share],	//Market share||1||||
+	[Measures].[D vs PY],		//D vs PY||1||||
+	[Measures].[Evol. Index]	//Evol. Index||1||||
+} on columns,
+{
+	nonempty(
+	{
+		IIF([DimFranchiseBrand].[HFranchiseBrand].[All] = 0 
+			or [DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM] is [DimFranchiseBrand].[FranchiseGroup].&[IAG_EM]
+			,null,
+			([DimFranchiseBrand].[HFranchiseBrand].[All],[DimLevel].[Num].&[1])),
+		(TopBrands,[DimLevel].[Num].&[2]),
+		case when [DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM] is [DimFranchiseBrand].[FranchiseGroup].[All] then
+			([DimFranchiseBrand].[HFranchiseBrand].[NovartisOtherSum],[DimLevel].[Num].&[2])
+		else
+			null
+		end
+	},[Measures].[Data])
+}//Name||0||$$level||0||
+on rows
+from
+// begin subcube
+(
+	select 
+		{[DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM]} on 0,
+		{[DimFranchiseBrand].[GroupType].&[0]} on 1
+	from [MMMCube]
+)
+//end subcube
+where (
+		[DimPeriod].[Month].&[201009],
+		[DimMeasureNames].[Name].&[LCUSD],
+		[DimDataSource].[Source].&[MTH],
+		[DimGeoView].[HGeo].[Country].&[653],
+		[DimChannel].[TypeOfBrands].&[Novartis]
+	)

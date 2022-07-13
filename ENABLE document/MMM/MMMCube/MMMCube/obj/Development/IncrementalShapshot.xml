@@ -1,0 +1,138 @@
+﻿<DeploymentSnapshot xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0">
+  <Target>
+    <Database>MMMCubeDev1</Database>
+    <Server>162.44.191.122\SQL2K8R2</Server>
+    <ConnectionString>DataSource=162.44.191.122\SQL2K8R2;Timeout=0</ConnectionString>
+  </Target>
+  <Options>
+    <TransactionalDeployment>false</TransactionalDeployment>
+    <PartitionDeployment>DeployPartitions</PartitionDeployment>
+    <RoleDeployment>DeployRolesRetainMembers</RoleDeployment>
+    <ProcessingOption>DoNotProcess</ProcessingOption>
+    <OutputScript></OutputScript>
+    <ImpactAnalysisFile></ImpactAnalysisFile>
+    <ConfigurationSettingsDeployment>Deploy</ConfigurationSettingsDeployment>
+    <OptimizationSettingsDeployment>Deploy</OptimizationSettingsDeployment>
+    <WriteBackTableCreation>UseExisting</WriteBackTableCreation>
+  </Options>
+  <Snapshot>
+    <ObjectSnapshots>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.RelationalDataSource</Type>
+        <TimeStamp>+0DmDc47MUC/Ev5Kkq+Y+w==12/15/2011 11:30:00 AM9/5/2011 9:25:47 AM</TimeStamp>
+        <ID>
+          <String>Vifor Pharma Brand Management Dashboard</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.DataSourceView</Type>
+        <TimeStamp>crqO7I8sd+9DakUdUZ4Jww==12/15/2011 4:21:59 PM9/5/2011 9:25:47 AM</TimeStamp>
+        <ID>
+          <String>Vifor Pharma Brand Management Dashboard</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>EYPxAxZzfIRZ9XAaryirwA==9/4/2011 10:25:48 PM9/5/2011 9:25:47 AM</TimeStamp>
+        <ID>
+          <String>DimPeriodType</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>SAbdgW9CIAYQMhSWcazBkQ==9/4/2011 10:25:48 PM9/5/2011 9:25:47 AM</TimeStamp>
+        <ID>
+          <String>DimMeasureNames</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>PJl347HhlntrqdVT1NmUkw==9/4/2011 10:25:48 PM9/5/2011 9:25:47 AM</TimeStamp>
+        <ID>
+          <String>DimKPI</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>X3wglWLVHJblTmaeQCftig==9/4/2011 10:25:48 PM9/5/2011 9:25:47 AM</TimeStamp>
+        <ID>
+          <String>DimLevel</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>4s0Ap7zJsNcWrDEKnhx4zQ==11/1/2011 11:58:34 PM9/5/2011 9:25:47 AM</TimeStamp>
+        <ID>
+          <String>DIM PERIOD</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>UssyfoDe0Pjtv+XpwXqucQ==9/4/2011 10:25:48 PM9/5/2011 9:25:47 AM</TimeStamp>
+        <ID>
+          <String>Period To Fact</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>ejiVwV2ohpvhWnwSOPgTZw==9/4/2011 10:25:48 PM9/5/2011 9:25:47 AM</TimeStamp>
+        <ID>
+          <String>Dim Geo Panel</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>YIp2LF04JjojE1eiK78WdQ==10/10/2011 5:37:24 AM9/5/2011 9:25:47 AM</TimeStamp>
+        <ID>
+          <String>Dim Geo View</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>FDfdCA4FMg3xGVye0N6UWQ==10/18/2011 10:36:02 PM9/5/2011 9:25:47 AM</TimeStamp>
+        <ID>
+          <String>DimFranchiseBrand</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>dl0pDiACXmGb85RgsLGRbA==9/5/2011 12:29:08 AM9/5/2011 10:43:06 AM</TimeStamp>
+        <ID>
+          <String>Dim Data Source</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>dOy27Q5AMgFNN4EQsOe4vg==10/17/2011 4:23:10 AM9/9/2011 9:30:54 AM</TimeStamp>
+        <ID>
+          <String>DimChannel</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Dimension</Type>
+        <TimeStamp>XYqdcn83GjZuYahGBvT+TA==10/6/2011 10:43:46 PM9/16/2011 9:32:39 AM</TimeStamp>
+        <ID>
+          <String>DimCorporation</String>
+        </ID>
+      </ObjectSnapshot>
+      <ObjectSnapshot>
+        <Type>Microsoft.AnalysisServices.Cube</Type>
+        <TimeStamp>Gm4/VuIooI3rO1Lzy9pyHQ==11/21/2011 5:24:16 AM9/5/2011 9:25:47 AMHFaBhPXS4s8mHn6MeIFlUA==9/7/2011 1:34:34 AM9/5/2011 9:25:47 AM</TimeStamp>
+        <ID>
+          <String>MMMCube</String>
+        </ID>
+      </ObjectSnapshot>
+    </ObjectSnapshots>
+    <DatabaseSnapshot>
+      <Type>Microsoft.AnalysisServices.Database</Type>
+      <TimeStamp>9/+3wfklqWhZHqU9XO6n1g==9/4/2011 10:25:48 PM9/5/2011 9:25:47 AM</TimeStamp>
+      <ID>
+        <String>MMMCubeDev1</String>
+      </ID>
+    </DatabaseSnapshot>
+    <Granularity>Coarse</Granularity>
+  </Snapshot>
+  <AssemblyLocations />
+  <ProcessingComplete>true</ProcessingComplete>
+  <LastDeployed>2011-12-15T10:22:27.073333Z</LastDeployed>
+</DeploymentSnapshot>

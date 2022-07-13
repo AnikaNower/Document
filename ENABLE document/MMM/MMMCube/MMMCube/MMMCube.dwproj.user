@@ -1,0 +1,29 @@
+<AnalysisServicesUserConfiguration xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ddl2="http://schemas.microsoft.com/analysisservices/2003/engine/2" xmlns:ddl2_2="http://schemas.microsoft.com/analysisservices/2003/engine/2/2" xmlns:ddl100_100="http://schemas.microsoft.com/analysisservices/2008/engine/100/100" xmlns:ddl200="http://schemas.microsoft.com/analysisservices/2010/engine/200" xmlns:ddl200_200="http://schemas.microsoft.com/analysisservices/2010/engine/200/200" xmlns:dwd="http://schemas.microsoft.com/DataWarehouse/Designer/1.0">
+  <Configurations>
+    <Configuration>
+      <Name>Development</Name>
+      <Options>
+        <UserIDs>
+          <ConfigurationSetting>
+            <Id>Vifor Pharma Brand Management Dashboard</Id>
+            <Name>Vifor Pharma Brand Management Dashboard</Name>
+            <Value xsi:type="xsd:string">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA82cWG7iBbEWxoyDkNBYXwwAAAABQAAAAVgBpAGYAbwByACAAUABoAGEAcgBtAGEAIABCAHIAYQBuAGQAIABNAGEAbgBhAGcAZQBtAGUAbgB0ACAARABhAHMAaABiAG8AYQByAGQAAAADZgAAwAAAABAAAACkLIfr4b08DuBGkvwcKOOAAAAAAASAAACgAAAAEAAAABpkEEqZka3wQKc8Ff3bSnEoAAAA5pBfbP7VhIDi+kertVxOrc60QQzugwYMw4pukRS1CTzro/aIpnvgCxQAAAAb0AQ9kmWM07MpYga3PIioHnlBUA==</Value>
+          </ConfigurationSetting>
+        </UserIDs>
+        <UserPasswords>
+          <ConfigurationSetting>
+            <Id>Vifor Pharma Brand Management Dashboard</Id>
+            <Name>Vifor Pharma Brand Management Dashboard</Name>
+            <Value xsi:type="xsd:string">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA82cWG7iBbEWxoyDkNBYXwwAAAABQAAAAVgBpAGYAbwByACAAUABoAGEAcgBtAGEAIABCAHIAYQBuAGQAIABNAGEAbgBhAGcAZQBtAGUAbgB0ACAARABhAHMAaABiAG8AYQByAGQAAAADZgAAwAAAABAAAABCD6ZAc2TQ5uYC5O8d+rJWAAAAAASAAACgAAAAEAAAAMCaMmyIytmj2yRWDWM6nEgoAAAAl0hxBLUWabx77NoMeEt3QAcntwyHa4FZoSl/6i1eoikOtNcCIRf17RQAAACaNqlQSJo5grC5iZPejnS8yFpaMQ==</Value>
+          </ConfigurationSetting>
+        </UserPasswords>
+        <TargetServer>162.44.196.245</TargetServer>
+        <TargetDatabase>NOVARTIS_MMM_DEV</TargetDatabase>
+        <StartObject>
+          <ObjectId></ObjectId>
+          <ObjectType>Current</ObjectType>
+        </StartObject>
+      </Options>
+    </Configuration>
+  </Configurations>
+</AnalysisServicesUserConfiguration>

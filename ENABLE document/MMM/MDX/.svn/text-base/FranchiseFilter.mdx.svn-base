@@ -1,0 +1,32 @@
+//0||0
+with
+
+member [Measures].[FranchiseName] as
+	case when [DimBusinessFranchise].[HBusinessFranchiseGrp].currentmember is [DimBusinessFranchise].[HBusinessFranchiseGrp].[All]
+		then "All"
+	else
+		string(
+		case when [DimBusinessFranchise].[HBusinessFranchiseGrp].currentmember.level.ordinal = 4 then 0 else 
+		[DimBusinessFranchise].[HBusinessFranchiseGrp].currentmember.level.ordinal end *2,
+		chr(160))
+		+[DimBusinessFranchise].[HBusinessFranchiseGrp].currentmember.name 
+	end
+	
+member [Measures].[FranchiseValue] as
+	[DimBusinessFranchise].[HBusinessFranchiseGrp].currentmember.MEMBER_UNIQUE_NAME
+
+select 
+{
+[Measures].[FranchiseName], //Name||1||||
+[Measures].[FranchiseValue] //Value||1||||
+}  on columns,
+{
+	[DimBusinessFranchise].[HBusinessFranchiseGrp].members  
+	-{
+		[DimBusinessFranchise].[HBusinessFranchiseGrp].[TherapticalArea].&[UNKNOWN]
+		,[DimBusinessFranchise].[HBusinessFranchiseGrp].[TherapticalArea].&[UNKNOWN].&[UNKNOWN]
+		,[DimBusinessFranchise].[HBusinessFranchiseGrp].[TherapticalArea].&[UNKNOWN].&[UNKNOWN].&[UNKNOWN]
+	}
+} //Brand||0|| 
+on rows
+from [MMMCube]

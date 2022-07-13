@@ -1,0 +1,67 @@
+
+
+  
+Declare @Table_Areas TABLE  
+(  
+Geo_Code varchar(50),  
+Parent_Code varchar(50),  
+Short_Desc varchar(255),  
+Level_Name varchar(100),  
+Level_Num decimal(9),  
+Level_Type varchar(50)  
+)  
+insert into @Table_Areas  
+select Geo_Code,Parent_Code,  
+Short_Desc,Level_Name,Level_Num,Level_Type  
+from E_GEOGRAPHY_GEO_2538 where Level_Num = 3  
+  
+  
+Declare @Table_Territories TABLE  
+(  
+Geo_Code varchar(50),  
+Parent_Code varchar(50),  
+Short_Desc varchar(255),  
+Level_Name varchar(100),  
+Level_Num decimal(9),  
+Level_Type varchar(50)  
+)  
+insert into @Table_Territories  
+select Geo_Code,Parent_Code,  
+Short_Desc,Level_Name,Level_Num,Level_Type  
+from E_GEOGRAPHY_GEO_2538 where Level_Num = 4  
+  
+ -- ---added by Rafayel Ahmed------
+
+Declare @Table_Bricks TABLE  
+(  
+Geo_Code varchar(50),  
+Parent_Code varchar(50),  
+Short_Desc varchar(255),  
+Level_Name varchar(100),  
+Level_Num decimal(9),  
+Level_Type varchar(50)  
+)  
+insert into @Table_Bricks  
+select Geo_Code,Parent_Code,  
+Short_Desc,Level_Name,Level_Num,Level_Type  
+from E_GEOGRAPHY_GEO_2538 where Level_Num = 6 
+----------------------------------
+  
+-----Modified by Rafayel Ahmed-------------
+
+  
+SELECT	RTRIM(TA.SHORT_DESC) AS Area,
+		 RTRIM(TT.SHORT_DESC) AS Territory,
+		 RTRIM(TB.SHORT_DESC) AS Brick ,
+         TB.GEO_CODE, 
+		TB.PARENT_CODE 
+--INTO dbo.Allergan_SPAIN_GEO_Levels  
+FROM  @Table_Areas TA ,
+     @Table_Territories TT ,
+	@Table_Bricks TB
+WHERE TB.PARENT_CODE=TT.GEO_CODE
+AND TT.PARENT_CODE=TA.GEO_CODE
+GROUP BY TA.SHORT_DESC, TT.SHORT_DESC, TB.SHORT_DESC,TB.GEO_CODE,TB.PARENT_CODE  
+ORDER BY TB.SHORT_DESC  
+
+----------------------------------------  

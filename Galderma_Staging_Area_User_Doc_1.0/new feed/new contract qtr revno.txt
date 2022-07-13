@@ -1,0 +1,21 @@
+download document from filezilla 162.44.183.174 Anika folder
+
+
+input file : file express
+input file name: IMS_GALDERMA_MIDAS _DTV Q115.ZIP, IMS_GALDERMA_MIDAS _MKTSEG_DTV Q115.ZIP, IMS_GALDERMA_MIDAS _NAME TYPE_DTV Q115.ZIP
+
+login 162.44.22.161
+
+input file location: D:\CustomData\Galderma_midas_feed\Input\Quarterly\Quarterly New Contract
+
+unzip all input file with folder name
+ 
+rename IMS_GALDERMA_MIDAS _DTV Q115.ZIP to REVNO
+IMS_GALDERMA_MIDAS _MKTSEG_DTV Q115.ZIP to MKT REVNO
+IMS_GALDERMA_MIDAS _NAME TYPE_DTV Q115.ZIP to NAMETYPE REVNO
+
+every folder contain 5 zip file. usually last need to be deleted. ** condition apply
+
+rename folder name Q01,, Q02, Q03, Q04 according measure. ** sequence is given SP
+
+open padds converter tools

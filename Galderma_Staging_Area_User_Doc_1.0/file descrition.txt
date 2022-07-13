@@ -1,0 +1,16 @@
+
+File express delivery description:
+Monthly :
+Old contract delivery for Mmm/YY MIDAS Monthly data
+New contract delivery for Mmm/YY MIDAS Monthly data
+
+PTR
+Quarter:
+New contract delivery for Qm/YY MIDAS data
+New contract delivery for FluoroUracil market Qm/YY MIDAS data
+
+PTR
+
+Galderma Monthly PTR delivery for Mmm/yy MIDAS Monthly data
+
+Galderma Monthly PTR delivery for Mmm/yy MIDAS Monthly data

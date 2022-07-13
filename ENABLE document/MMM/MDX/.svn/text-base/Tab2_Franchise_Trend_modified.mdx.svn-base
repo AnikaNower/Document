@@ -1,0 +1,57 @@
+//0||0
+//@period=[DimPeriod].[Month].&[201110]
+//@measure=[DimMeasureNames].[Name].&[LCUSD]
+//@datatype=MTH
+with
+
+member [DimBusinessFranchise].[BusinessFranchiseGrp].[TotalSales] as
+	sum(AllNovarticsBrands,[Measures].[Data])
+
+set AllNovarticsBrands as
+	case when [DimBusinessFranchise].[BusinessFranchise].[All] is 
+		[DimBusinessFranchise].[BusinessFranchise].[All] then
+	{[DimBusinessFranchise].[BusinessFranchise].[BusinessFranchise].members
+	- [DimBusinessFranchise].[BusinessFranchise].&[UNKNOWN]
+	}
+	else null end
+
+member [Measures].[Display Name] as
+	case when [DimBusinessFranchise].[BusinessFranchise].currentmember.name = "TotalSales" then "Total Sum"
+	else [DimBusinessFranchise].[BusinessFranchise].currentmember.name end
+
+member [Measures].[itemCount] as
+	count(lastperiods(12,[DimPeriod].[Month].&[201110]))
+
+member [Measures].[LatestSales] as
+	sum(([Measures].[Data],[DimPeriod].[Month].&[201110]))
+
+member [Measures].[Level] as
+[DimLevel].[Num].currentmember.name
+
+select 
+{
+	([Measures].[Level],lastperiods(1,[DimPeriod].[Month].&[201110])),	//Level||1||||Level
+	([Measures].[Display Name],lastperiods(1,[DimPeriod].[Month].&[201110])),	//Franchise||1||||
+	([Measures].[Data],lastperiods(12,[DimPeriod].[Month].&[201110]))//{1}||1||[Measures].[itemCount]||
+} on columns,
+{
+	nonempty(
+	{
+		(order(AllNovarticsBrands,[Measures].[LatestSales],bdesc),[DimLevel].[Num].&[1])
+	},[Measures].[Data])
+}//Name||0||$$level||0||
+on rows
+from
+// begin subcube
+(
+	select 
+		{[DimBusinessFranchise].[BusinessFranchise].[All]} on 0
+	from [MMMCube]
+)
+//end subcube
+where (
+		[DimMeasureNames].[Name].&[LCUSD],
+		[DimDataSource].[Source].&[MTH],
+		[DimGeoView].[HGeo].[All],
+		[DimFranchiseBrand].[GroupType].[All]
+	)

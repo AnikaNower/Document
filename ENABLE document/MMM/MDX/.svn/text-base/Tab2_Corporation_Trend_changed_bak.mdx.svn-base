@@ -1,0 +1,84 @@
+//0||0
+//@period=[DimPeriod].[Month].&[201009]
+//@measure=[DimMeasureNames].[Name].&[LCUSD]
+//@datatype=MTH
+with
+
+set Top8count as
+	topcount(
+			nonempty(
+				{
+					(
+						except([DimCorporation].[CorporationCode].[CorporationCode].members,
+						[DimCorporation].[CorporationCode].&[NOVARTIS]),
+						[DimFranchiseBrand].[TypeOfBrands].[TypeOfBrands].members,
+						[DimChannel].[TypeOfBrands].[TypeOfBrands].members,
+						[DimCorporation].[CorporationMncFlag].&[Y]
+					),
+					OneNovartisBrand
+				}
+			,[Measures].[Data])
+		,10,[Measures].[Data])
+	
+
+set OneNovartisBrand as
+	([DimCorporation].[CorporationCode].[All],
+	[DimFranchiseBrand].[TypeOfBrands].[All],
+	[DimChannel].[TypeOfBrands].&[Novartis],
+	[DimCorporation].[CorporationMncFlag].[All])
+
+
+set TopBrands as
+	IIF(count(union(Top8count,OneNovartisBrand)) <= 10,
+		order(Top8count + OneNovartisBrand,[Measures].[LatestSales],bdesc),
+		topcount(Top8count,9,[Measures].[Data]) + OneNovartisBrand
+	)
+
+member [Measures].[Display Name] as
+	iif([DimCorporation].[CorporationCode].currentmember.name = "NovartisOtherSum", "Others",
+		IIF([DimCorporation].[CorporationCode].currentmember.name = "NovartisCompetitorSum",
+			"Other Competitors Brands",
+				IIF([DimCorporation].[CorporationCode].currentmember.name = "TotalSales",
+				"Total Sum",IIF([DimCorporation].[CorporationCode].currentmember.name = "All","NOVARTIS",
+			[DimCorporation].[CorporationCode].currentmember.name)))
+	)
+
+member [Measures].[Sales (in m)] as
+	IIF(isempty([Measures].[Data]),0,[Measures].[Data]), format_string = '0.###'
+
+member [Measures].[itemCount] as
+	count(lastperiods(12,[DimPeriod].[Month].&[201009]))
+
+member [Measures].[LatestSales] as
+	sum(([Measures].[Data],[DimPeriod].[Month].&[201009]))
+
+member [Measures].[isNovartis] as 
+	case when [DimCorporation].[CorporationCode].currentmember.name= "All" then
+		1	
+	else 0 
+	end
+
+select 
+{
+	([Measures].[isNovartis],lastperiods(1,[DimPeriod].[Month].&[201009])),	//isNovartis||1||||isNovartis
+	([Measures].[Display Name],lastperiods(1,[DimPeriod].[Month].&[201009])),	//Name||1||||
+	([Measures].[Sales (in m)],lastperiods(12,[DimPeriod].[Month].&[201009]))//{1}||1||[Measures].[itemCount]||
+} on columns,
+{
+	nonempty({TopBrands},[Measures].[Data])
+}//selection1||0||$$selection2||0||$$selection3||0||$$selection4||0||
+on rows
+from
+// begin subcube
+(
+	select 
+		{[DimGeoView].[HGeo].[All]} on 0 
+		,{[DimFranchiseBrand].[FranchiseGroup].[All]}	on 1
+		,{[DimFranchiseBrand].[GroupType].[All]} on 2
+	from [MMMCube]
+)
+//end subcube
+where (
+		[DimMeasureNames].[Name].&[LCUSD],
+		[DimDataSource].[Source].&[MTH]
+)	

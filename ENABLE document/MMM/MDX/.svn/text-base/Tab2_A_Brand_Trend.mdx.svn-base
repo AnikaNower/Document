@@ -1,0 +1,69 @@
+//0||0
+//@period=[DimPeriod].[Month].&[201107]
+//@measure=[DimMeasureNames].[Name].&[LCUSD]
+//@datatype=MTH
+with
+
+member [DimFranchiseBrand].[GroupType].[slice] as
+	[DimFranchiseBrand].[GroupType].&[1]
+
+set FullProductSet as
+	[DimFranchiseBrand].[HFranchiseBrand].[BrandGroup].members
+
+set AllNovarticsBrands as
+	nonempty(
+		(FullProductSet,
+		[DimFranchiseBrand].[GroupType].[slice])
+		,[Measures].[Data]
+	)
+
+set TopBrands as
+	nonempty(
+		topcount(AllNovarticsBrands,10,[Measures].[LatestSales])
+	,[Measures].[Data])
+
+member [Measures].[Display Name] as
+	iif([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "NovartisOtherSum", "Others (Novartis)",
+		IIF([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "NovartisCompetitorSum",
+			"Others (Competitors)",
+				IIF([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "TotalSales",
+				"Total Sum",
+			[DimFranchiseBrand].[HFranchiseBrand].currentmember.name))
+	)
+
+member [Measures].[Sales (in m)] as
+IIF(isempty([Measures].[Data]),0,[Measures].[Data]), format_string = '0.###'
+
+member [Measures].[itemCount] as
+	count(lastperiods(12,[DimPeriod].[Month].&[201107]))
+
+member [Measures].[LatestSales] as
+	sum(([Measures].[Data],[DimPeriod].[Month].&[201107]))
+
+member [Measures].[isNovartis] as 
+	1
+
+select 
+{
+	([Measures].[isNovartis],lastperiods(1,[DimPeriod].[Month].&[201107])),	//isNovartis||1||||isNovartis
+	([Measures].[Display Name],lastperiods(1,[DimPeriod].[Month].&[201107])),	//Name||1||||
+	([Measures].[Sales (in m)],lastperiods(12,[DimPeriod].[Month].&[201107]))//{1}||1||[Measures].[itemCount]||
+} on columns,
+{
+	nonempty({TopBrands},[Measures].[Data])
+}//selection2||0||$$selection||0||
+on rows
+from
+// begin subcube
+(
+	select 
+		{[DimGeoView].[HGeo].[All]} on 0 
+		,{[DimFranchiseBrand].[FranchiseGroup].[All]}	on 1
+		,{[DimChannel].[TypeOfBrands].&[Novartis]} on 2
+	from [MMMCube]
+)
+//end subcube
+where (
+		[DimMeasureNames].[Name].&[LCUSD],
+		[DimDataSource].[Source].&[MTH]
+	)	

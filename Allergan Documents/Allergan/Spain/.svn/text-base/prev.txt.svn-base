@@ -1,0 +1,70 @@
+
+
+-- =============================================  
+-- Author:  Phil Price  
+-- Create date: 10 Apr 2007  
+-- Description: Creates Geography Levels Table for the production of the  
+-- feed from the downloaded Finland data  
+-- =============================================  
+Create PROCEDURE [dbo].[usp_Allergan_Create_SPAIN_GEO_Levels]  
+ -- Add the parameters for the stored procedure here  
+   
+AS  
+  
+  
+BEGIN TRY  
+  
+SET NOCOUNT ON;  
+  
+IF exists (SELECT name FROM sysobjects WHERE name = 'Allergan_SPAIN_GEO_Levels')  
+  DROP TABLE dbo.Allergan_SPAIN_GEO_Levels  
+  
+  
+Declare @Table_Areas TABLE  
+(  
+Geo_Code varchar(50),  
+Parent_Code varchar(50),  
+Short_Desc varchar(255),  
+Level_Name varchar(100),  
+Level_Num decimal(9),  
+Level_Type varchar(50)  
+)  
+insert into @Table_Areas  
+select Geo_Code,Parent_Code,  
+Short_Desc,Level_Name,Level_Num,Level_Type  
+from E_GEOGRAPHY_GEO_2538 where Level_Num = 3  
+  
+  
+Declare @Table_Territories TABLE  
+(  
+Geo_Code varchar(50),  
+Parent_Code varchar(50),  
+Short_Desc varchar(255),  
+Level_Name varchar(100),  
+Level_Num decimal(9),  
+Level_Type varchar(50)  
+)  
+insert into @Table_Territories  
+select Geo_Code,Parent_Code,  
+Short_Desc,Level_Name,Level_Num,Level_Type  
+from E_GEOGRAPHY_GEO_2538 where Level_Num = 4  
+  
+  
+  
+  
+SELECT RTRIM(TA.SHORT_DESC) AS Area, RTRIM(TT.SHORT_DESC) AS Territory,  
+                       TT.GEO_CODE, TT.PARENT_CODE  
+INTO dbo.Allergan_SPAIN_GEO_Levels  
+FROM  @Table_Areas TA INNER JOIN  
+     @Table_Territories TT ON TT.PARENT_CODE = TA.GEO_CODE  
+GROUP BY TA.SHORT_DESC, TT.SHORT_DESC, TT.GEO_CODE,   
+                      TT.PARENT_CODE  
+ORDER BY TT.SHORT_DESC  
+  
+   
+END TRY  
+  
+BEGIN CATCH  
+ EXEC usp_RethrowError;  
+END CATCH  
+  

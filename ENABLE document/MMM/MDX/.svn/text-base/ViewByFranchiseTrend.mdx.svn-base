@@ -1,0 +1,82 @@
+//0||0
+//@region=[DimGeoView].[HGeo].[SubSubRegion].&[09_SSR09]
+//@country=[DimGeoView].[HGeo].[Country].&[653]
+//@franchise=[DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM]
+//@measure=[DimMeasureNames].[Name].&[LCUSD]
+//@period=[DimPeriod].[Month].&[201009]
+//@datatype=MTH
+//@brand=[DimFranchiseBrand].[GroupType].&[0]
+with
+
+set AllNovarticsBrands as
+	case when [DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM] is [DimFranchiseBrand].[FranchiseGroup].[All] then
+		nonempty(existing [DimFranchiseBrand].[HFranchiseBrand].[FranchiseGroup].members,[Measures].[Data])
+		when [DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM] is [DimFranchiseBrand].[FranchiseGroup].&[IAG_EM] then
+		null
+	else
+		linkmember([DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM],[DimFranchiseBrand].[HFranchiseBrand])
+	end
+
+
+set TopSelect as
+	order(topcount(AllNovarticsBrands,9,[Measures].[Data]),[Measures].[LatestSales],bdesc)
+
+member [DimFranchiseBrand].[HFranchiseBrand].[NovartisOtherSum] as
+	sum(except(AllNovarticsBrands,TopSelect),[Measures].[Data])
+
+member [Measures].[Display Name] as
+	iif([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "NovartisOtherSum", "Others",
+		IIF([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "NovartisCompetitorSum",
+			"Others",
+				IIF([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "All",
+				"Total Sum",
+			[DimFranchiseBrand].[HFranchiseBrand].currentmember.name))
+	)
+
+member [Measures].[itemCount] as
+	count(lastperiods(12,[DimPeriod].[Month].&[201009]))
+
+member [Measures].[LatestSales] as
+	sum(([Measures].[Data],[DimPeriod].[Month].&[201009]))
+
+member [Measures].[Level] as
+	[DimLevel].[Num].currentmember.name
+
+select 
+{
+	([Measures].[Level],lastperiods(1,[DimPeriod].[Month].&[201009])),	//Level||1||||Level
+	([Measures].[Display Name],lastperiods(1,[DimPeriod].[Month].&[201009])),	//Franchise||1||||
+	([Measures].[Data],lastperiods(12,[DimPeriod].[Month].&[201009]))//{1}||1||[Measures].[itemCount]||
+} on columns,
+{
+	nonempty(
+		{
+			IIF([DimFranchiseBrand].[HFranchiseBrand].[All] = 0 
+			or [DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM] is [DimFranchiseBrand].[FranchiseGroup].&[IAG_EM]
+			,null,
+			([DimFranchiseBrand].[HFranchiseBrand].[All],[DimLevel].[Num].&[1])),
+		(TopSelect,[DimLevel].[Num].&[2]),
+		case when [DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM] is [DimFranchiseBrand].[FranchiseGroup].[All] then
+			([DimFranchiseBrand].[HFranchiseBrand].[NovartisOtherSum],[DimLevel].[Num].&[2])
+		else
+			null
+		end
+		}
+	,[Measures].[Data])
+}//Name||0||$$Name1||0||
+on rows
+from
+// begin subcube
+(
+	select 
+		{[DimGeoView].[HGeo].[Country].&[653]} on 0
+	from [MMMCube]
+)
+//end subcube
+where (
+		[DimMeasureNames].[Name].&[LCUSD],
+		[DimDataSource].[Source].&[MTH],
+		[DimGeoView].[HGeo].[Country].&[653],
+		[DimFranchiseBrand].[GroupType].&[0],
+		[DimChannel].[TypeOfBrands].&[Novartis]
+	)

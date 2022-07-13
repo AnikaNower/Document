@@ -1,0 +1,131 @@
+//0||0
+//@region=[DimGeoView].[HGeo].[SubSubRegion].&[09_SSR09]
+//@country=[DimGeoView].[HGeo].[Country].&[653]
+//@franchise=[DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM]
+//@period=[DimPeriod].[Month].&[201009]
+//@measure=[DimMeasureNames].[Name].&[LCUSD]
+//@datatype=MTH
+//@slice=[DimFranchiseBrand].[GroupType].[All]
+with
+
+set AllNovarticsBrands as
+	nonempty([DimFranchiseBrand].[Brand].[Brand].members,[Measures].[Data])
+
+member [DimFranchiseBrand].[Brand].[TotalSales] as
+	sum(AllNovarticsBrands,[Measures].[Data])
+
+set TopBrands as
+	nonempty(
+		topcount(
+			(AllNovarticsBrands)
+			,
+			IIF([DimFranchiseBrand].[GroupType].[All] is [DimFranchiseBrand].[GroupType].&[0]
+			,9,8)
+			
+			,[Measures].[Data]
+		)
+	,[Measures].[Data])
+
+member [DimFranchiseBrand].[Brand].[NovartisOtherSum] as
+	sum(except(AllNovarticsBrands,TopBrands),[Measures].[Data])
+
+member [Measures].[Display Name] as
+	iif([DimFranchiseBrand].[Brand].currentmember.name = "NovartisOtherSum", "Other Novartis Brands",
+		IIF([DimFranchiseBrand].[Brand].currentmember.name = "NovartisCompetitorSum",
+			"Other Competitors Brands",
+				IIF([DimFranchiseBrand].[Brand].currentmember.name = "TotalSales",
+				"Total Sum",
+			[DimFranchiseBrand].[Brand].currentmember.name))
+	)
+
+member [Measures].[Sales (in m)] as
+[Measures].[Data]--/1000000
+
+member [Measures].[ParentSales] as
+	sum(AllNovarticsBrands,[Measures].[Data])
+
+member [Measures].[PrevYearSales] as
+	([Measures].[Data],[DimPeriod].[Month].&[201009].lag(12))
+
+member [Measures].[Growth vs PY] as
+IIF ([Measures].[Data]  and [Measures].[PrevYearSales] <> 0, 
+	([Measures].[Data] - [Measures].[PrevYearSales] ) 
+	/ ([Measures].[PrevYearSales]) * 100,"-")
+
+member [Measures].[Market share] as
+	IIF([DimFranchiseBrand].[Brand].currentmember.name = "TotalSales",'-',
+	IIF([Measures].[ParentSales] and [Measures].[Data] <> 0, 
+	([Measures].[Data]/[Measures].[ParentSales])*100, "-"))
+
+member [Measures].[Prev Market share] as
+	IIF([Measures].[Market share] = "-",
+		"-",([Measures].[Market share],[DimPeriod].[Month].&[201009].lag(12)))
+
+member [Measures].[D vs PY] as
+IIF ([Measures].[Market share] <> "-" and [Measures].[Prev Market share] <> "-", 
+	([Measures].[Market share] - [Measures].[Prev Market share] ) ,"-")
+
+member [Measures].[Market Growth] as
+	IIF([DimFranchiseBrand].[Brand].currentmember.name = "TotalSales",'-',
+	([DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM],[Measures].[Growth vs PY]))
+
+member [Measures].[Evol. Index] as
+case when [Measures].[Growth vs PY] = "-" or [Measures].[Market Growth] = "-"
+then "-"
+else (1 + [Measures].[Growth vs PY]) / (1 + [Measures].[Market Growth]) end
+
+member [Measures].[Level] as
+[DimLevel].[Num].currentmember.name
+
+member [Measures].[isNovartis] as 
+	case when 
+		order(nonempty([DimChannel].[ChannelID].[ChannelID].members
+			,[Measures].[Data]),[Measures].[Data],bdesc).item(0).name = "Competitor"
+			then 0
+	else 1
+	end
+
+
+select 
+{
+	[Measures].[Level],			//Level||1||||Level
+	[Measures].[isNovartis],	//isNovartis||1||||isNovartis
+	[Measures].[Display Name],	//Name||1||||
+	[Measures].[Sales (in m)],	//Sales (in m)||1||||
+	[Measures].[Growth vs PY],	//Growth vs PY||1||||
+	[Measures].[Market share],	//Market share||1||||
+	[Measures].[D vs PY],		//D vs PY||1||||
+	[Measures].[Evol. Index]	//Evol. Index||1||||
+} on columns,
+{
+	nonempty({([DimFranchiseBrand].[Brand].[TotalSales],[DimLevel].[Num].&[1]),
+	(TopBrands,[DimLevel].[Num].&[2])
+	,([DimFranchiseBrand].[Brand].[NovartisOtherSum],[DimLevel].[Num].&[2])},[Measures].[Data])
+}//selection||0||$$level||0||
+on rows
+from [MMMCube]
+
+where (
+	case when [DimGeoView].[HGeo].[SubSubRegion].&[09_SSR09] is [DimGeoView].[HGeo].[All] then
+			([DimGeoView].[Region].[All],[DimGeoView].[SubRegion].[All],[DimGeoView].[SubSubRegion].[All])
+		else
+		IIF([DimGeoView].[HGeo].[SubSubRegion].&[09_SSR09].level.ordinal = 1,
+			LINKMEMBER([DimGeoView].[HGeo].[SubSubRegion].&[09_SSR09],[DimGeoView].[Region]),
+			IIF([DimGeoView].[HGeo].[SubSubRegion].&[09_SSR09].level.ordinal = 2,
+				LINKMEMBER([DimGeoView].[HGeo].[SubSubRegion].&[09_SSR09],[DimGeoView].[SubRegion]),
+				IIF([DimGeoView].[HGeo].[SubSubRegion].&[09_SSR09].level.ordinal = 3,
+						LINKMEMBER([DimGeoView].[HGeo].[SubSubRegion].&[09_SSR09],[DimGeoView].[SubSubRegion]),
+						LINKMEMBER([DimGeoView].[HGeo].[SubSubRegion].&[09_SSR09],[DimGeoView].[Country]))))
+		end,
+						
+		case when [DimGeoView].[HGeo].[Country].&[653] is [DimGeoView].[HGeo].[SubSubRegion].&[09_SSR09] then
+			[DimGeoView].[Country].[All]
+		else
+			linkmember([DimGeoView].[HGeo].[Country].&[653],[DimGeoView].[Country])
+		end,
+		[DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM],
+		[DimPeriod].[Month].&[201009],
+		[DimMeasureNames].[Name].&[LCUSD],
+		[DimDataSource].[Source].&[MTH],
+		[DimFranchiseBrand].[GroupType].[All]
+	)	

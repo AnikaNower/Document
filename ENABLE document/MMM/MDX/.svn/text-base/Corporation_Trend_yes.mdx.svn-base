@@ -1,0 +1,154 @@
+//0||0
+//@country=[DimGeoView].[HGeo].[Country].&[653]
+//@franchise=[DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM]
+//@period=[DimPeriod].[Month].&[201009]
+//@measure=[DimMeasureNames].[Name].&[LCUSD]
+//@datatype=MTH
+//@brand=[DimFranchiseBrand].[GroupType].&[0]
+//@showAll=rasel
+with
+
+member [DimCorporation].[CorporationCode].[TotalSales] as
+	([DimCorporation].[CorporationCode].[All]
+	,[DimFranchiseBrand].[TypeOfBrands].[All]
+	,[DimChannel].[TypeOfBrands].[All]
+	,[Measures].[Data])
+
+set AllCorporationsY as
+	nonempty
+			(
+			([DimCorporation].[CorporationCode].[CorporationCode].members,
+			[DimCorporation].[CorporationMncFlag].&[Y],
+			[DimChannel].[TypeOfBrands].[TypeOfBrands].members),	
+			[Measures].[Data])
+
+member [DimCorporation].[CorporationCode].[TopNovartis] as 
+	([DimCorporation].[CorporationCode].&[NOVARTIS],
+	[DimFranchiseBrand].[TypeOfBrands].&[Novartis],
+	[DimChannel].[TypeOfBrands].&[Novartis]
+	)
+
+set TopCorp as
+	order(
+			topcount(AllCorporationsY, 9,[Measures].[Data])
+			-([DimCorporation].[CorporationCode].&[NOVARTIS], [DimCorporation].[CorporationMncFlag].&[Y],[DimChannel].[TypeOfBrands].[TypeOfBrands].members)
+			+([DimCorporation].[CorporationCode].[TopNovartis],[DimCorporation].[CorporationMncFlag].&[Y],[DimChannel].[TypeOfBrands].[All])
+		,[Measures].[Data]
+		,bdesc
+		)
+set AllCorporationsN as
+	IIF("rasel"="YES",
+		nonempty(
+			([DimCorporation].[CorporationCode].[CorporationCode].members,
+			[DimCorporation].[CorporationMncFlag].&[N],
+			[DimChannel].[TypeOfBrands].[All])
+		,[Measures].[Data])
+		,null
+	)
+
+set OtherCorporations as
+	IIF("rasel" = "YES",
+		TopCorp		
+		+order(
+		AllCorporationsY +AllCorporationsN + ([DimCorporation].[CorporationCode].[OthersNovartis], [DimCorporation].[CorporationMncFlag].[All],[DimChannel].[TypeOfBrands].[All])
+		,[Measures].[Data],bdesc)
+		-([DimCorporation].[CorporationCode].&[NOVARTIS], [DimCorporation].[CorporationMncFlag].&[Y],[DimChannel].[TypeOfBrands].[TypeOfBrands].members)
+		,null
+	)
+
+member [DimCorporation].[CorporationCode].[NovartisOtherSum] as
+	IIF(isempty( [DimCorporation].[CorporationCode].[TotalSales] - sum(TopCorp,[Measures].[Data])),
+		0,[DimCorporation].[CorporationCode].[TotalSales] - sum(TopCorp,[Measures].[Data]))
+
+member [Measures].[Display Name] as
+	IIF([DimCorporation].[CorporationCode].currentmember.name = "NovartisOtherSum", 
+		"Others",
+		IIF([DimCorporation].[CorporationCode].currentmember.name = "NovartisCompetitorSum",
+			"Other Competitors Brands",
+			IIF([DimCorporation].[CorporationCode].currentmember.name = "TotalSales",
+				"Total Sum",
+				IIF([DimCorporation].[CorporationCode].currentmember.name = "TopNovartis"
+						or [DimCorporation].[CorporationCode].currentmember.name = "OthersNovartis",
+					"NOVARTIS",
+					[DimCorporation].[CorporationCode].currentmember.name
+				)
+			)
+		)
+	)
+
+member [Measures].[Sales (in m)] as
+	IIF(isempty([Measures].[Data]),0,[Measures].[Data]), format_string = '0.########'
+
+member [Measures].[Level] as
+[DimLevel].[Num].currentmember.name
+
+
+member [Measures].[itemCount] as
+	count(lastperiods(12,[DimPeriod].[Month].&[201009]))
+
+member [Measures].[LatestSales] as
+	sum(([Measures].[Data],[DimPeriod].[Month].&[201009]))
+
+member [Measures].[isNovartis] as 
+	case when [DimCorporation].[CorporationCode].currentmember.name= "TopNovartis"
+			or [DimCorporation].[CorporationCode].currentmember.name= "OthersNovartis" 
+			or [DimCorporation].[CorporationCode].currentmember.name= "NOVARTIS" then
+		1	
+	else 0 
+	end
+
+select 
+{
+	([Measures].[Level],lastperiods(1,[DimPeriod].[Month].&[201009])),		//Level||1||||Level
+	([Measures].[isNovartis],lastperiods(1,[DimPeriod].[Month].&[201009])),	//isNovartis||1||||isNovartis
+	([Measures].[Display Name],lastperiods(1,[DimPeriod].[Month].&[201009])),	//Corporation||1||||
+	([Measures].[Sales (in m)],lastperiods(12,[DimPeriod].[Month].&[201009]))	//{1}||1||[Measures].[itemCount]||
+} on columns,
+{
+	case when [DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM] is [DimFranchiseBrand].[FranchiseGroup].&[IAG_EM] then
+	null
+	else
+	{
+		IIF([DimCorporation].[CorporationCode].[TotalSales] <> 0,
+			([DimCorporation].[CorporationCode].[TotalSales]
+			,[DimCorporation].[CorporationMncFlag].[All]
+			,[DimChannel].[TypeOfBrands].[All]
+			,[DimLevel].[Num].&[1])
+			,null),
+			
+			IIF("rasel"="YES",
+				null,	
+				(TopCorp,[DimLevel].[Num].&[2])
+			),
+			
+			IIF("rasel"="YES",
+				null,
+				IIF([DimCorporation].[CorporationCode].[NovartisOtherSum] <> 0,
+					([DimCorporation].[CorporationCode].[NovartisOtherSum]
+					,[DimCorporation].[CorporationMncFlag].[All]
+					,[DimChannel].[TypeOfBrands].[All]
+					,[DimLevel].[Num].&[3])
+					,null)
+			),
+			
+			IIF("rasel"="YES",
+				(OtherCorporations,[DimLevel].[Num].&[4]),
+				null
+			)
+	}end
+}//selection2||0||$$selection||0||$$selection1||0||$$selection3||0||
+on rows
+from
+// begin subcube
+(
+	select 
+		{[DimGeoView].[HGeo].[Country].&[653]} on 0 
+	from [MMMCube]
+)
+//end subcube
+where (
+		[DimMeasureNames].[Name].&[LCUSD],
+		[DimDataSource].[Source].&[MTH],
+		[DimFranchiseBrand].[FranchiseGroup].&[IAG_CVM],
+		[DimFranchiseBrand].[GroupType].&[0]
+)	

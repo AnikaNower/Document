@@ -1,0 +1,4 @@
+mail name: galderma OTCIMS database Q115
+
+input: monthly, galderma ptr
+database: galderma midas feed ptr otc rx (Q1_revno part)

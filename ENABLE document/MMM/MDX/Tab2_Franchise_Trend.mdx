@@ -1,0 +1,56 @@
+//0||0
+//@period=[DimPeriod].[Month].&[201009]
+//@measure=[DimMeasureNames].[Name].&[LCUSD]
+//@datatype=MTH
+with
+
+set AllNovarticsBrands as
+	[DimFranchiseBrand].[HFranchiseBrand].[FranchiseGroup].members
+
+set TopBrands as
+	nonempty(
+		topcount({AllNovarticsBrands},10,[Measures].[LatestSales])
+	,[Measures].[LatestSales])
+
+member [Measures].[Display Name] as
+	iif([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "NovartisOtherSum", "Other Novartis Brands",
+		IIF([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "NovartisCompetitorSum",
+			"Other Competitors Brands",
+				IIF([DimFranchiseBrand].[HFranchiseBrand].currentmember.name = "All",
+				"Total Sum",
+			[DimFranchiseBrand].[HFranchiseBrand].currentmember.name))
+	)
+
+member [Measures].[Sales (in m)] as
+	IIF(isempty([Measures].[Data]),0,[Measures].[Data]), format_string = '0.###'
+	
+member [Measures].[itemCount] as
+	count(lastperiods(12,[DimPeriod].[Month].&[201009]))
+
+member [Measures].[LatestSales] as
+	sum(([Measures].[Data],[DimPeriod].[Month].&[201009]))
+
+select 
+{
+	([Measures].[Display Name],lastperiods(1,[DimPeriod].[Month].&[201009])),	//Name||1||||
+	([Measures].[Sales (in m)],lastperiods(12,[DimPeriod].[Month].&[201009]))//{1}||1||[Measures].[itemCount]||
+} on columns,
+{
+	nonempty({TopBrands},[Measures].[Data])
+}//Name||0||
+on rows
+from
+// begin subcube
+(
+	select 
+		{[DimFranchiseBrand].[FranchiseGroup].[All]} on 0
+		,{[DimFranchiseBrand].[GroupType].[All]} on 1
+	from [MMMCube]
+)
+//end subcube
+where (
+		[DimMeasureNames].[Name].&[LCUSD],
+		[DimDataSource].[Source].&[MTH],
+		[DimGeoView].[HGeo].[All],
+		[DimChannel].[TypeOfBrands].&[Novartis]
+	)

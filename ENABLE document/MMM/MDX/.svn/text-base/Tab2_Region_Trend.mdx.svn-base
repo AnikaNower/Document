@@ -1,0 +1,51 @@
+//0||0
+//@measure=[DimMeasureNames].[Name].&[LCUSD]
+//@period=[DimPeriod].[Month].&[201009]
+//@datatype=MTH
+with
+
+set AllNovarticsBrands as
+	[DimGeoView].[HGeo].[Region].members
+
+set TopBrands as
+	nonempty(
+		topcount({AllNovarticsBrands},10,[Measures].[LatestSales])
+	,[Measures].[Data])
+
+member [Measures].[Display Name] as
+	[DimGeoView].[HGeo].currentmember.name
+
+member [Measures].[itemCount] as
+	count(lastperiods(12,[DimPeriod].[Month].&[201009]))
+
+member [Measures].[LatestSales] as
+	sum(([Measures].[Data],[DimPeriod].[Month].&[201009]))
+
+
+member [Measures].[Sales (in m)] as
+	IIF(isempty([Measures].[Data]),0,[Measures].[Data]), format_string = '0.###'
+
+member [Measures].[Level] as
+	[DimLevel].[Num].currentmember.name
+
+select 
+{
+	([Measures].[Sales (in m)],lastperiods(12,[DimPeriod].[Month].&[201009]))//{1}||1||[Measures].[itemCount]||
+} on columns,
+{
+	nonempty({TopBrands},[Measures].[Data])
+}//Name||1||
+on rows
+from 
+// begin subcube
+(
+	select 
+		{[DimGeoView].[HGeo].[All]}	on 0
+	from [MMMCube]
+)
+//end subcube
+where (
+		[DimMeasureNames].[Name].&[LCUSD],
+		[DimDataSource].[Source].&[MTH],
+		[DimChannel].[TypeOfBrands].&[Novartis]
+	)

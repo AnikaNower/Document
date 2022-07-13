@@ -1,0 +1,8 @@
+Server Name: 
+                PROD – cdtssql88p
+Or           TEST – cdtssql89u
+Database Name: 
+                Monthly – ImsNvsM_MthQc
+Or           Quarterly – ImsNvsM_QtrQc
+LatestTimePeriod:
+                Data Publish Period (dd/mm/yyyy)
